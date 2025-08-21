@@ -9,7 +9,9 @@
     <Poster
       id="Background"
       width="1920"
-      height="1080" />
+      height="1080" 
+      loadDisplayMode="scaleToZoom"
+      />
 
     <Animation
       id="fadeinAnimation"
@@ -49,8 +51,8 @@
       focusedColor="0x333333FF"
       numRows="7"
       vertFocusAnimationStyle="floatingFocus"
-      itemSpacing="[0,20]"
-      itemSize="[300, 35]" />
+      itemSpacing="[0,25]"
+      itemSize="[320, 40]" />
 
     <!-- Black hud at bottom of the Details Screen -->
     <Rectangle
@@ -65,7 +67,8 @@
       id="Poster"
       translation="[120, 825]"
       width="300"
-      height="178" />
+      height="178"
+      loadDisplayMode="scaleToFit" />
 
     <!-- Item description -->
     <Description
@@ -75,6 +78,7 @@
 
     <!-- Overhang Node (has to be rendered after others) -->
     <Overhang
+      id="Overhang"
       showClock="true"
       title="Hero-Grid-Channel" />
 

@@ -36,7 +36,7 @@ sub parseResponse()
           if xmlitem.getname() = "media:content"
             item.stream = {url : xmlitem.url}
             item.url = xmlitem.getattributes().url
-            item.streamformat = "mp4"
+            item.streamformat = "hls"
 
             mediacontent = xmlitem.getchildelements()
             for each mediacontentitem in mediacontent

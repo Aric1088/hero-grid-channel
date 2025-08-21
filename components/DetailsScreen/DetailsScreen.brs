@@ -18,7 +18,7 @@ Function Init()
 
   ' create buttons
   result = []
-  for each button in ["Play", "Second button"]
+  for each button in ["Play"]
     result.push({title : button})
   end for
   m.buttons.content = ContentList2SimpleNode(result)
@@ -91,6 +91,7 @@ Sub OnContentChange()
   m.top.streamUrl                 = m.top.content.url
   m.poster.uri                    = m.top.content.hdBackgroundImageUrl
   m.background.uri                = m.top.content.hdBackgroundImageUrl
+  m.top.findNode("Overhang").title = m.top.content.title
 End Sub
 
 '///////////////////////////////////////////'

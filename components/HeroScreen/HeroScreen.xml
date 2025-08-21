@@ -19,12 +19,13 @@
       focusXOffset="[165]"
       itemSize="[1920,220]"
       numRows="9"
+      
       rowFocusAnimationStyle="FixedFocusWrap"
-      rowHeights="[800,300,615]"
-      rowItemSize="[[1600,700],[375,197],[375,526],[375,197]]"
+      rowHeights="[615,615,615]"
+      rowItemSize="[[375,526],[375,526],[375,526],[375,197]]"
       rowItemSpacing="[[30,0]]"
       rowLabelOffset="[[165,8]]"
-      showRowLabel="[false,true]"
+      showRowLabel="[true,true,true]"
       showRowCounter="[true,true,true,false]"
       translation="[0,155]"/>
 

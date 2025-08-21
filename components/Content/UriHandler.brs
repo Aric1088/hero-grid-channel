@@ -53,7 +53,7 @@ sub updateContent()
       oldParent = m.top.contentCache.getField(i.toStr())
       if oldParent <> invalid
         for j = 0 to (oldParent.getChildCount() - 1)
-          oldParent.getChild(0).reparent(parent,true)
+          oldParent.getChild(0).reparent(parent, true)
         end for
       end if
     end for
@@ -82,26 +82,26 @@ sub go()
   ' Holds requests by id
   m.jobsById = {}
 
-	' UriFetcher event loop
+  ' UriFetcher event loop
   while true
     msg = wait(0, m.port)
     mt = type(msg)
     print "Received event type '"; mt; "'"
     ' If a request was made
     if mt = "roSGNodeEvent"
-      if msg.getField()="request"
+      if msg.getField() = "request"
         if addRequest(msg.getData()) <> true then print "Invalid request"
-      else if msg.getField()="ContentCache"
+      else if msg.getField() = "ContentCache"
         updateContent()
       else
         print "Error: unrecognized field '"; msg.getField() ; "'"
       end if
-    ' If a response was received
-    else if mt="roUrlEvent"
+      ' If a response was received
+    else if mt = "roUrlEvent"
       processResponse(msg)
-    ' Handle unexpected cases
+      ' Handle unexpected cases
     else
-	   print "Error: unrecognized event type '"; mt ; "'"
+      print "Error: unrecognized event type '"; mt ; "'"
     end if
   end while
 end sub
@@ -115,7 +115,7 @@ end sub
 ' return value:
 '   True if request succeeds
 ' 	False if invalid request
-function addRequest(request as Object) as Boolean
+function addRequest(request as object) as boolean
   print "UriHandler.brs - [addRequest]"
 
   if type(request) = "roAssociativeArray"
@@ -132,12 +132,14 @@ function addRequest(request as Object) as Boolean
       print "Error: Incorrect type for Parser: " ; type(parser)
       return false
     end if
-  	if type(context) = "roSGNode"
+    if type(context) = "roSGNode"
       parameters = context.parameters
-      if type(parameters)="roAssociativeArray"
-      	uri = parameters.uri
+      if type(parameters) = "roAssociativeArray"
+        uri = parameters.uri
         if type(uri) = "roString"
           urlXfer = createObject("roUrlTransfer")
+          urlXfer.SetCertificatesFile("common:/certs/ca-bundle.crt")
+          urlXfer.InitClientCertificates()
           urlXfer.setUrl(uri)
           urlXfer.setPort(m.port)
           ' should transfer more stuff from parameters to urlXfer
@@ -152,19 +154,19 @@ function addRequest(request as Object) as Boolean
           else
             print "Error: request couldn't be issued"
           end if
-  		    print "Initiating transfer '"; idkey; "' for URI '"; uri; "'"; " succeeded: "; ok
+          print "Initiating transfer '"; idkey; "' for URI '"; uri; "'"; " succeeded: "; ok
         else
           print "Error: invalid uri: "; uri
           m.top.numBadRequests++
-  			end if
+        end if
       else
         print "Error: parameters is the wrong type: " + type(parameters)
         return false
       end if
-  	else
+    else
       print "Error: context is the wrong type: " + type(context)
-  		return false
-  	end if
+      return false
+    end if
   else
     print "Error: request is the wrong type: " + type(request)
     return false
@@ -177,7 +179,7 @@ end function
 '   Sets the node's response field with the response info.
 ' parameters:
 ' 	msg: a roUrlEvent (https://sdkdocs.roku.com/display/sdkdoc/roUrlEvent)
-sub processResponse(msg as Object)
+sub processResponse(msg as object)
   print "UriHandler.brs - [processResponse]"
   idKey = stri(msg.GetSourceIdentity()).trim()
   job = m.jobsById[idKey]
@@ -188,10 +190,10 @@ sub processResponse(msg as Object)
     uri = parameters.uri
     print "Response for transfer '"; idkey; "' for URI '"; uri; "'"
     result = {
-      code:    msg.GetResponseCode(),
+      code: msg.GetResponseCode(),
       headers: msg.GetResponseHeaders(),
       content: msg.GetString(),
-      num:     jobnum
+      num: jobnum
     }
     ' could handle various error codes, retry, etc. here
     m.jobsById.delete(idKey)

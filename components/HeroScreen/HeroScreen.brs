@@ -6,8 +6,8 @@ sub Init()
   'print "HeroScreen.brs - [init]"
 
   'Get references to child nodes
-  m.RowList       =   m.top.findNode("RowList")
-  m.background    =   m.top.findNode("Background")
+  m.RowList = m.top.findNode("RowList")
+  m.background = m.top.findNode("Background")
 
   'Create a task node to fetch the UI content and populate the screen
   m.UriHandler = CreateObject("roSGNode", "UriHandler")
@@ -17,12 +17,12 @@ sub Init()
   URLs = [
     ' Uncomment this line to simulate a bad request and make the dialog box appear
     ' "bad request",
-    "http://devtools.web.roku.com/samples/sample_content.rss",
-    "http://devtools.web.roku.com/samples/sample_content.rss",
-    "http://devtools.web.roku.com/samples/sample_content.rss",
-    "http://devtools.web.roku.com/samples/sample_content.rss"
+    "http://spamfilms.ddns.net:8080/rss",
+    "http://spamfilms.ddns.net:8080/rss",
+    "http://spamfilms.ddns.net:8080/rss",
+    "http://spamfilms.ddns.net:8080/rss",
   ]
-  makeRequest(URLs,"Parser")
+  makeRequest(URLs, "Parser")
 
   'Create observer events for when content is loaded
   m.top.observeField("visible", "onVisibleChange")
@@ -30,7 +30,7 @@ sub Init()
 end sub
 
 ' Issues a URL request to the UriHandler component
-sub makeRequest(URLs as object, ParserComponent as String)
+sub makeRequest(URLs as object, ParserComponent as string)
   'print "HeroScreen.brs - [makeRequest]"
   for i = 0 to URLs.count() - 1
     context = createObject("roSGNode", "Node")
@@ -65,10 +65,10 @@ sub OnItemFocused()
   'where element 0 contains the index of the focused row,
   'and element 1 contains the index of the focused item in that row.
   if itemFocused.Count() = 2 then
-    focusedContent            = m.top.content.getChild(itemFocused[0]).getChild(itemFocused[1])
+    focusedContent = m.top.content.getChild(itemFocused[0]).getChild(itemFocused[1])
     if focusedContent <> invalid then
-      m.top.focusedContent    = focusedContent
-      m.background.uri        = focusedContent.hdBackgroundImageUrl
+      m.top.focusedContent = focusedContent
+      m.background.uri = focusedContent.hdBackgroundImageUrl
     end if
   end if
 end sub
@@ -80,7 +80,7 @@ sub onVisibleChange()
 end sub
 
 ' set proper focus to RowList in case if return from Details Screen
-Sub onFocusedChildChange()
+sub onFocusedChildChange()
   'print "HeroScreen.brs - [onFocusedChildChange]"
   if m.top.isInFocusChain() and not m.rowList.hasFocus() then m.rowList.setFocus(true)
-End Sub
+end sub
