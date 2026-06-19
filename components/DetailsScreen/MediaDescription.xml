@@ -7,6 +7,9 @@
     <Label
       id="Title"
       color="0xFFFFFF"
+      font="font:LargeBoldSystemFont"
+      width="900"
+      height="58"
       text=""/>
 
     
@@ -15,8 +18,10 @@
       id="Description"
       color="0xFFFFFF"
       wrap="true"
-      width="1120"
-      height="145"
+      width="880"
+      height="250"
+      numLines="6"
+      font="font:MediumSystemFont"
       lineSpacing="7"
       text=""/>
   </children>

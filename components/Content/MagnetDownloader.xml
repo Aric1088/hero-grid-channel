@@ -4,7 +4,9 @@
   <interface>
     <field id="magnetUrl" type="string" />
     <field id="streamUrl" type="string" />
+    <field id="fileIndex" type="integer" value="-1" />
     <field id="success" type="boolean" alwaysNotify="true" />
+    <field id="responseCode" type="integer" value="0" />
   </interface>
   
   <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />

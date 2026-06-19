@@ -43,13 +43,15 @@
   </script>
 
   <children>
-      <Rectangle id="bg" color="0x00000000" />
+      <Rectangle id="bg" color="0x00000000" width="200" height="50" />
       <Label 
         id="label" 
         color="0xAAAAAAFF" 
         font="font:MediumBoldSystemFont" 
         horizAlign="center" 
         vertAlign="center"
+        width="200"
+        height="50"
       />
   </children>
 </component>

@@ -179,7 +179,6 @@ end sub
 
 ' set proper focus to RowList in case if return from Details Screen
 sub onFocusedChildChange()
-  'print "HeroScreen.brs - [onFocusedChildChange]"
   if m.top.isInFocusChain() and not m.rowList.hasFocus() then m.rowList.setFocus(true)
 end sub
 

@@ -19,11 +19,14 @@
     <RowList
       id="MenuRowList"
       itemComponentName="TopMenuItem"
-      translation="[0, 0]"
+      itemSize="[1920, 50]"
       numRows="1"
       rowHeights="[50]"
       rowItemSize="[[200, 50]]"
       rowItemSpacing="[[15, 0]]"
+      showRowLabel="[false]"
+      showRowCounter="[false]"
+      translation="[0, 0]"
     />
   </children>
   

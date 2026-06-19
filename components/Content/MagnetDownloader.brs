@@ -21,10 +21,15 @@ sub downloadMagnet()
   urlTransfer.AddHeader("Accept", "application/json")
   
   ' Build JSON body
-  jsonBody = "{""magnet_uri"":""" + magnetUrl + """}"
+  jsonBody = "{""magnet_uri"":""" + magnetUrl + """"
+  if m.top.fileIndex >= 0
+    jsonBody = jsonBody + ",""file_index"":" + m.top.fileIndex.toStr()
+  end if
+  jsonBody = jsonBody + "}"
   
   ' Use synchronous POST (OK in Task thread)
   responseCode = urlTransfer.PostFromString(jsonBody)
+  m.top.responseCode = responseCode
   if responseCode >= 200 and responseCode < 300
     print "MagnetDownloader: Request sent successfully, response code: " + responseCode.toStr()
     if m.top.streamUrl <> invalid and m.top.streamUrl <> ""

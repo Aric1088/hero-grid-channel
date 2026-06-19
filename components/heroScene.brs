@@ -81,7 +81,7 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
   else if key = "up"
     if m.HeroScreen.isInFocusChain()
       focusedInfo = m.HeroScreen.itemFocused
-      if focusedInfo <> invalid and focusedInfo.count() > 0 and focusedInfo[0] = 0
+      if focusedInfo = invalid or focusedInfo.count() = 0 or focusedInfo[0] = 0
         m.TopMenu.setFocus(true)
         return true
       end if
@@ -157,6 +157,8 @@ sub toggleSearch()
     m.SettingsScreen.visible = false
     m.EpisodeSelectScreen.visible = false
     m.DetailsScreen.visible = false
+    m.Overhang.visible = false
+    m.TopMenu.visible = false
     m.SearchScreen.callFunc("setSearchContext", "all")
     m.SearchScreen.callFunc("resetState")
     m.SearchScreen.visible = true
@@ -173,6 +175,8 @@ sub toggleSettings()
     m.SearchScreen.visible = false
     m.EpisodeSelectScreen.visible = false
     m.DetailsScreen.visible = false
+    m.Overhang.visible = false
+    m.TopMenu.visible = false
     m.SettingsScreen.visible = true
     m.SettingsScreen.setFocus(true)
   end if
@@ -220,6 +224,9 @@ sub onSearchResultSelected()
   print "HeroScene.brs - [onSearchResultSelected]"
   item = m.SearchScreen.contentSelected
   if item <> invalid
+    ' Selection is a one-shot event. Clear the node reference before Details
+    ' mutates it with stream and torrent fields.
+    m.SearchScreen.contentSelected = invalid
     m.SearchScreen.visible = false
     handleItemSelected(item)
   end if

@@ -27,6 +27,7 @@
       color="0xFFFFFFFF" />
 
     <Label
+      id="searchSubtitle"
       text="Find movies and TV shows"
       translation="[110, 112]"
       font="font:MediumSystemFont"
@@ -39,15 +40,15 @@
     <Button
       id="searchButton"
       text="Search"
-      translation="[1580, 180]"
+      translation="[1580, 500]"
       minWidth="220"
       showFocusFootprint="true" />
 
     <Label
       id="statusLabel"
       text="Enter at least 2 characters to search."
-      translation="[1580, 290]"
-      width="260"
+      translation="[1510, 620]"
+      width="300"
       wrap="true"
       numLines="4"
       font="font:MediumSystemFont"
@@ -56,7 +57,7 @@
     <Label
       id="resultsHeading"
       text="Results"
-      translation="[110, 600]"
+      translation="[110, 220]"
       font="font:MediumBoldSystemFont"
       color="0xFFFFFFFF"
       visible="false" />
@@ -64,13 +65,13 @@
     <RowList
       id="resultsGrid"
       itemComponentName="customItem"
-      translation="[0, 640]"
+      translation="[0, 260]"
       focusXOffset="[110]"
-      itemSize="[1920, 205]"
+      itemSize="[1920, 330]"
       numRows="2"
-      rowHeights="[205, 205]"
-      rowItemSize="[[140, 185]]"
-      rowItemSpacing="[[24, 0]]"
+      rowHeights="[330, 330]"
+      rowItemSize="[[180, 270]]"
+      rowItemSpacing="[[28, 0]]"
       rowLabelOffset="[[110, 0]]"
       showRowLabel="[true, true]"
       showRowCounter="[true, true]"
@@ -80,7 +81,7 @@
     <!-- Loading Spinner -->
     <LoadingIndicator 
       id="loadingIndicator" 
-      translation="[1390, 185]"
+      translation="[1390, 480]"
       text="Searching..."
       fadeInterval="0.5"
     />

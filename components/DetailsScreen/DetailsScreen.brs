@@ -15,8 +15,14 @@ function Init()
   m.description = m.top.findNode("Description")
   m.background = m.top.findNode("Background")
   m.loadingIndicator = m.top.findNode("LoadingIndicator")
+  m.playbackStatus = m.top.findNode("PlaybackStatus")
+  m.titleLabel = m.top.findNode("TitleLabel")
   m.fadeIn = m.top.findNode("fadeinAnimation")
   m.fadeOut = m.top.findNode("fadeoutAnimation")
+
+  print "DetailsScreen - Buttons node valid: " + Box(m.buttons <> invalid).toStr()
+
+  ' set up button observer
 
   print "DetailsScreen - Buttons node valid: " + Box(m.buttons <> invalid).toStr()
 
@@ -29,10 +35,15 @@ function Init()
 
   ' initialize selected resolution and torrents
   m.selectedResolution = invalid
-  m.availableTorrents = {}
+  m.availableTorrents = { "720p": [], "1080p": [], "2160p": [] }
+  m.currentTorrentIndex = 0
   m.torrentFetcher = invalid
   m.magnetTask = invalid
   m.pendingVideoContent = invalid
+  m.playbackQuality = invalid
+  m.playbackInProgress = false
+  m.activeContentKey = ""
+  m.detailsReady = false
 
   ' create buttons (will be updated dynamically in OnContentChange)
   result = []
@@ -57,11 +68,16 @@ sub onVisibleChange()
     m.buttons.setFocus(true)
   else
     if m.top.findNode("ResolutionBackdrop") <> invalid then m.top.findNode("ResolutionBackdrop").visible = false
+    if m.top.findNode("ResolutionPanel") <> invalid then m.top.findNode("ResolutionPanel").visible = false
+    if m.top.findNode("ResolutionTitle") <> invalid then m.top.findNode("ResolutionTitle").visible = false
     if m.resolutionList <> invalid then m.resolutionList.visible = false
     if m.loadingIndicator <> invalid
       m.loadingIndicator.control = "stop"
       m.loadingIndicator.visible = false
     end if
+    if m.playbackStatus <> invalid then m.playbackStatus.visible = false
+    m.playbackInProgress = false
+    m.playbackQuality = invalid
     m.fadeOut.control = "start"
     m.videoPlayer.visible = false
     m.videoPlayer.control = "stop"
@@ -119,19 +135,26 @@ end sub
 
     if selectedIndex = 0
       print "DetailsScreen - [onItemSelected] Play button pressed"
-      ' If multiple resolutions exist, show selector
-      if m.availableTorrents <> invalid and m.availableTorrents.count() > 1
+      ' Count available resolutions
+      availableCount = 0
+      lastQuality = ""
+      for each quality in m.availableTorrents
+        if m.availableTorrents[quality] <> invalid and m.availableTorrents[quality].count() > 0
+          availableCount = availableCount + 1
+          lastQuality = quality
+        end if
+      end for
+
+      if availableCount > 1
         showResolutionSelector()
         m.buttons.setFocus(false)
-        else if m.availableTorrents <> invalid and m.availableTorrents.count() = 1
-          ' Just play the single available resolution
-          keys = m.availableTorrents.keys()
-          switchToQuality(keys[0])
-          playContent()
-        else
-          ' Use default URL
-          playContent()
-        end if
+      else if availableCount = 1
+        switchToQuality(lastQuality)
+        playContent()
+      else
+        ' Use default URL
+        playContent()
+      end if
     else if selectedIndex = 1
       print "DetailsScreen - [onItemSelected] Watchlist button pressed"
       if isInWatchlist(content.id)
@@ -145,8 +168,7 @@ end sub
         }
         addToWatchlist(itemData)
       end if
-      ' Re-trigger content change to update button labels
-      OnContentChange()
+      updateActionButtons()
     end if
   end sub
 
@@ -177,16 +199,13 @@ sub playContent()
 
   if content.magnetUrl <> invalid and content.magnetUrl <> ""
     print "Preparing magnet stream before playback..."
+    m.playbackInProgress = true
+    if m.playbackQuality = invalid then m.playbackQuality = m.selectedResolution
     m.pendingVideoContent = videoContent
-    m.loadingIndicator.text = "Preparing Stream..."
+    updatePreparationStatus()
     m.loadingIndicator.visible = true
     m.loadingIndicator.control = "start"
-
-    m.magnetTask = CreateObject("roSGNode", "MagnetDownloader")
-    m.magnetTask.magnetUrl = content.magnetUrl
-    m.magnetTask.streamUrl = content.url
-    m.magnetTask.observeField("success", "onMagnetPrepared")
-    m.magnetTask.control = "RUN"
+    startMagnetTask()
     return
   end if
 
@@ -196,18 +215,69 @@ end sub
 sub onMagnetPrepared()
   if m.magnetTask = invalid then return
 
-  m.loadingIndicator.control = "stop"
-  m.loadingIndicator.visible = false
-
   if m.magnetTask.success = true and m.pendingVideoContent <> invalid
     print "DetailsScreen: Stream preparation complete"
+    m.loadingIndicator.control = "stop"
+    m.loadingIndicator.visible = false
     startVideoPlayback(m.pendingVideoContent)
+    m.pendingVideoContent = invalid
+    m.playbackInProgress = false
+    m.playbackStatus.visible = false
   else
-    print "ERROR: Stream preparation failed"
-    m.buttons.setFocus(true)
+    print "WARNING: Stream preparation failed for torrent index " + m.currentTorrentIndex.toStr()
+
+    m.currentTorrentIndex = m.currentTorrentIndex + 1
+    quality = m.playbackQuality
+    torrents = invalid
+    if quality <> invalid and m.availableTorrents <> invalid
+      torrents = m.availableTorrents[quality]
+    end if
+    if torrents <> invalid and m.currentTorrentIndex < torrents.count()
+      print "DetailsScreen: Trying next torrent index " + m.currentTorrentIndex.toStr() + " of " + torrents.count().toStr()
+      prepareSelectedTorrent()
+      m.pendingVideoContent.url = m.top.content.url
+      updatePreparationStatus()
+      startMagnetTask()
+    else
+      print "ERROR: No more torrents available for this quality!"
+      m.loadingIndicator.control = "stop"
+      m.loadingIndicator.visible = false
+      m.playbackInProgress = false
+      m.playbackStatus.text = "No working " + Box(quality).toStr() + " source was found. Choose Play to try another quality."
+      m.playbackStatus.visible = true
+      m.buttons.setFocus(true)
+      m.pendingVideoContent = invalid
+    end if
+  end if
+end sub
+
+sub startMagnetTask()
+  if m.magnetTask <> invalid
+    m.magnetTask.unobserveField("success")
+    m.magnetTask.control = "STOP"
   end if
 
-  m.pendingVideoContent = invalid
+  content = m.top.content
+  if content = invalid then return
+  m.magnetTask = CreateObject("roSGNode", "MagnetDownloader")
+  m.magnetTask.magnetUrl = content.magnetUrl
+  m.magnetTask.streamUrl = content.url
+  fileIndex = content.getField("file")
+  if fileIndex <> invalid then m.magnetTask.fileIndex = fileIndex
+  m.magnetTask.observeField("success", "onMagnetPrepared")
+  m.magnetTask.control = "RUN"
+end sub
+
+sub updatePreparationStatus()
+  quality = m.playbackQuality
+  total = 1
+  if quality <> invalid and m.availableTorrents[quality] <> invalid
+    total = m.availableTorrents[quality].count()
+  end if
+  attempt = m.currentTorrentIndex + 1
+  m.loadingIndicator.text = "Preparing " + Box(quality).toStr() + " source " + attempt.toStr() + " of " + total.toStr() + "..."
+  m.playbackStatus.text = "Checking source " + attempt.toStr() + " of " + total.toStr()
+  m.playbackStatus.visible = true
 end sub
 
 sub startVideoPlayback(videoContent as object)
@@ -256,6 +326,23 @@ sub OnContentChange()
   content = m.top.content
   if content = invalid then return
 
+  contentKey = ""
+  if content.id <> invalid then contentKey = content.id
+  if contentKey = "" and content.getField("imdbId") <> invalid then contentKey = content.getField("imdbId")
+  if contentKey <> "" and contentKey = m.activeContentKey
+    if m.playbackInProgress or m.torrentFetcher <> invalid or m.detailsReady
+      print "DetailsScreen: Ignoring duplicate content notification for " + contentKey
+      return
+    end if
+  end if
+  m.activeContentKey = contentKey
+  m.detailsReady = false
+  if m.torrentFetcher <> invalid
+    m.torrentFetcher.unobserveField("content")
+    m.torrentFetcher.control = "STOP"
+    m.torrentFetcher = invalid
+  end if
+
   ' Set description
   m.description.content = content
 
@@ -269,30 +356,24 @@ sub OnContentChange()
   end if
 
   ' Set title
-  if content.title <> invalid
-    m.top.findNode("Overhang").title = content.title
-  end if
+  if content.title <> invalid then m.titleLabel.text = content.title
 
   ' Reset torrents and resolution
-  m.availableTorrents = {}
+  m.availableTorrents = { "720p": [], "1080p": [], "2160p": [] }
   m.selectedResolution = invalid
+  m.playbackQuality = invalid
+  m.playbackInProgress = false
+  m.currentTorrentIndex = 0
   m.loadingIndicator.control = "stop"
   m.loadingIndicator.visible = false
+  m.playbackStatus.visible = false
 
   ' Button references
   m.playButton = m.top.findNode("playButton")
   m.resumeButton = m.top.findNode("resumeButton")
   m.resolutionList = m.top.findNode("ResolutionList")
 
-  ' Build buttons dynamically
-  result = []
-  result.push({ title: "Play" })
-  if isInWatchlist(content.id)
-      result.push({ title: "Remove from Watchlist" })
-  else
-      result.push({ title: "Add to Watchlist" })
-  end if
-  m.buttons.content = ContentList2SimpleNode(result)
+  updateActionButtons()
 
   print "Loading details for: " + Box(content.title).toStr()
 
@@ -307,36 +388,65 @@ sub OnContentChange()
   print "Available qualities: 720p=" + has720p.toStr() + ", 1080p=" + has1080p.toStr() + ", 2160p=" + has2160p.toStr()
 
   ' Build list of available torrents
-  if has720p or has1080p or has2160p
+  if content.getField("torrents") <> invalid and content.getField("torrents").count() > 0
+    print "Found torrents list in content object directly (e.g., from TV show episode)"
+    for each t in content.torrents
+      q = "unknown"
+      if t.quality <> invalid then q = LCase(t.quality)
+      if q = "4k" then q = "2160p"
+      
+      if q = "720p" or q = "1080p" or q = "2160p"
+        candidateIsHdr = isHdrTorrent(t)
+        candidateLanguageRank = getLanguageRank(t)
+        
+        m.availableTorrents[q].push({
+          quality: q,
+          hash: t.hash,
+          magnet: t.url,
+          seeds: t.seeds,
+          file: t.fileIdx,
+          isHdr: candidateIsHdr,
+          languageRank: candidateLanguageRank
+        })
+      end if
+    end for
+    
+    for each q in m.availableTorrents
+      sortTorrents(m.availableTorrents[q])
+    end for
+
+    print "Parsed TV show torrents from content.torrents"
+  else if has720p or has1080p or has2160p
     if has720p
-      m.availableTorrents["720p"] = {
+      m.availableTorrents["720p"].push({
         quality: "720p",
         hash: content.getField("torrent720pHash"),
         magnet: content.getField("torrent720pMagnet"),
         seeds: content.getField("torrent720pSeeds"),
         file: content.getField("torrent720pFile")
-      }
+      })
     end if
     if has1080p
-      m.availableTorrents["1080p"] = {
+      m.availableTorrents["1080p"].push({
         quality: "1080p",
         hash: content.getField("torrent1080pHash"),
         magnet: content.getField("torrent1080pMagnet"),
         seeds: content.getField("torrent1080pSeeds"),
         file: content.getField("torrent1080pFile")
-      }
+      })
     end if
     if has2160p
-      m.availableTorrents["2160p"] = {
+      m.availableTorrents["2160p"].push({
         quality: "2160p",
         hash: content.getField("torrent2160pHash"),
         magnet: content.getField("torrent2160pMagnet"),
         seeds: content.getField("torrent2160pSeeds"),
         file: content.getField("torrent2160pFile")
-      }
+      })
     end if
 
-    print "Found " + m.availableTorrents.count().toStr() + " resolution options"
+    print "Found resolution options"
+    m.detailsReady = true
 
     ' We only parse here. Resolution selector will be shown when Play is clicked.
   else
@@ -407,16 +517,20 @@ sub showResolutionSelector()
   resolutions = []
   m.resolutionQualities = []
   for each quality in m.availableTorrents
-    print "Adding quality option: " + quality
-    m.resolutionQualities.push(quality)
-    resolutions.push({
-      title: quality
-    })
+    if m.availableTorrents[quality] <> invalid and m.availableTorrents[quality].count() > 0
+      print "Adding quality option: " + quality
+      m.resolutionQualities.push(quality)
+      resolutions.push({
+        title: quality
+      })
+    end if
   end for
 
   ' Display resolution list with backdrop
   m.resolutionList.content = ContentList2SimpleNode(resolutions)
   m.top.findNode("ResolutionBackdrop").visible = true
+  m.top.findNode("ResolutionPanel").visible = true
+  m.top.findNode("ResolutionTitle").visible = true
   m.resolutionList.visible = true
   m.resolutionList.jumpToItem = 0
   m.resolutionList.setFocus(true)
@@ -438,6 +552,8 @@ end sub
     end if
   
     m.top.findNode("ResolutionBackdrop").visible = false
+    m.top.findNode("ResolutionPanel").visible = false
+    m.top.findNode("ResolutionTitle").visible = false
     m.resolutionList.visible = false
     m.buttons.setFocus(true)
     m.buttons.jumpToItem = 0
@@ -448,41 +564,44 @@ end sub
 ' Switch to a different quality
 sub switchToQuality(quality as string)
   print "DetailsScreen.brs - [switchToQuality] Switching to: " + quality
+  m.selectedResolution = quality
+  m.playbackQuality = quality
+  m.currentTorrentIndex = 0
+  prepareSelectedTorrent()
+end sub
 
+sub prepareSelectedTorrent()
   content = m.top.content
-  if content = invalid
-    print "ERROR: Content is invalid!"
+  quality = m.playbackQuality
+  if quality = invalid then quality = m.selectedResolution
+  if content = invalid or quality = invalid then return
+
+  torrents = m.availableTorrents[quality]
+  if torrents = invalid or torrents.count() = 0 or m.currentTorrentIndex >= torrents.count()
+    print "ERROR: No more torrents available for quality " + quality
     return
   end if
 
-  ' Get torrent info from the map
-  torrent = m.availableTorrents[quality]
-  if torrent = invalid
-    print "ERROR: Quality not found: " + quality
-    return
-  end if
+  torrent = torrents[m.currentTorrentIndex]
+  print "Preparing torrent index " + m.currentTorrentIndex.toStr() + " of " + torrents.count().toStr() + " (hash: " + torrent.hash + ")"
 
-  if torrent.hash <> invalid and torrent.hash <> ""
-    updatedFields = {
-      magnetUrl: torrent.magnet,
-      torrentHash: torrent.hash,
-      selectedQuality: quality
-    }
+  updatedFields = {
+    magnetUrl: torrent.magnet,
+    torrentHash: torrent.hash,
+    selectedQuality: quality
+  }
 
-    if torrent.file <> invalid
-      streamUrl = resolveBackendPath("/v1/stream/" + torrent.hash + "/" + torrent.file.toStr() + "/master.m3u8")
-      updatedFields.file = torrent.file
-    else
-      streamUrl = resolveBackendPath("/v1/stream/" + torrent.hash + "/master.m3u8")
-    end if
-    updatedFields.url = streamUrl
-    content.setFields(updatedFields)
-
-    print "Stream URL updated: " + streamUrl
-    print "Torrent hash updated: " + torrent.hash
+  if torrent.file <> invalid
+    streamUrl = resolveBackendPath("/v1/stream/" + torrent.hash + "/" + torrent.file.toStr() + "/master.m3u8")
+    updatedFields.file = torrent.file
   else
-    print "ERROR: No hash for quality " + quality
+    streamUrl = resolveBackendPath("/v1/stream/" + torrent.hash + "/master.m3u8")
   end if
+  updatedFields.url = streamUrl
+  content.setFields(updatedFields)
+
+  print "Stream URL updated: " + streamUrl
+  print "Torrent hash updated: " + torrent.hash
 end sub
 
 sub onTorrentFetched()
@@ -492,7 +611,10 @@ sub onTorrentFetched()
   m.buttons.visible = true
   m.buttons.setFocus(true)
   
+  if m.torrentFetcher = invalid then return
   detailsNode = m.torrentFetcher.content
+  m.torrentFetcher.unobserveField("content")
+  m.torrentFetcher = invalid
   if detailsNode <> invalid and detailsNode.details <> invalid
     movie = detailsNode.details
     if movie.torrents <> invalid and movie.torrents.count() > 0
@@ -502,47 +624,54 @@ sub onTorrentFetched()
         if q = "4k" then q = "2160p"
         
         if q = "720p" or q = "1080p" or q = "2160p"
-          existing = m.availableTorrents[q]
           candidateIsHdr = isHdrTorrent(t)
           candidateLanguageRank = getLanguageRank(t)
-          replaceExisting = existing = invalid
-          if replaceExisting = false
-            if candidateLanguageRank > existing.languageRank
-              replaceExisting = true
-            else if candidateLanguageRank = existing.languageRank
-              if existing.isHdr = true and candidateIsHdr = false
-                replaceExisting = true
-              else if existing.isHdr = candidateIsHdr and t.seeds <> invalid
-                if existing.seeds = invalid or t.seeds > existing.seeds
-                  replaceExisting = true
-                end if
-              end if
-            end if
-          end if
-
-          if replaceExisting
-            m.availableTorrents[q] = {
-              quality: q,
-              hash: t.hash,
-              magnet: t.url,
-              seeds: t.seeds,
-              file: t.fileIdx,
-              isHdr: candidateIsHdr,
-              languageRank: candidateLanguageRank
-            }
-          end if
+          
+          m.availableTorrents[q].push({
+            quality: q,
+            hash: t.hash,
+            magnet: t.url,
+            seeds: t.seeds,
+            file: t.fileIdx,
+            isHdr: candidateIsHdr,
+            languageRank: candidateLanguageRank
+          })
         end if
       end for
       
-      print "Dynamically fetched " + m.availableTorrents.count().toStr() + " resolutions"
+      for each q in m.availableTorrents
+        sortTorrents(m.availableTorrents[q])
+      end for
       
-      ' We only parse here. Resolution selector will be shown when Play is clicked.
-      if m.availableTorrents.count() = 1
-        keys = m.availableTorrents.keys()
-        switchToQuality(keys[0])
+      availableCount = 0
+      lastQuality = ""
+      for each q in m.availableTorrents
+        if m.availableTorrents[q].count() > 0
+          availableCount = availableCount + 1
+          lastQuality = q
+        end if
+      end for
+
+      print "Dynamically fetched " + availableCount.toStr() + " resolutions"
+      m.detailsReady = true
+      
+      if availableCount = 1
+        switchToQuality(lastQuality)
       end if
     end if
   end if
+end sub
+
+sub updateActionButtons()
+  content = m.top.content
+  if content = invalid then return
+  result = [{ title: "Play" }]
+  if isInWatchlist(content.id)
+    result.push({ title: "Remove from Watchlist" })
+  else
+    result.push({ title: "Add to Watchlist" })
+  end if
+  m.buttons.content = ContentList2SimpleNode(result)
 end sub
 
 function isHdrTorrent(torrent as object) as boolean
@@ -583,6 +712,46 @@ function getLanguageRank(torrent as object) as integer
   if hasMulti then return 3
   if hasForeign then return 0
   return 2
+end function
+
+function isBetterTorrent(t1 as object, t2 as object) as boolean
+  if t2.languageRank > t1.languageRank return true
+  if t2.languageRank < t1.languageRank return false
+  
+  if t1.isHdr = true and t2.isHdr = false return true
+  if t1.isHdr = false and t2.isHdr = true return false
+  
+  if t2.seeds <> invalid and (t1.seeds = invalid or t2.seeds > t1.seeds) return true
+  return false
+end function
+
+sub sortTorrents(torrents as object)
+  n = torrents.count()
+  for i = 0 to n - 2
+    for j = 0 to n - i - 2
+      if isBetterTorrent(torrents[j], torrents[j+1])
+        temp = torrents[j]
+        torrents[j] = torrents[j+1]
+        torrents[j+1] = temp
+      end if
+    end for
+  end for
+end sub
+
+function onKeyEvent(key as string, press as boolean) as boolean
+  if not press then return false
+
+  if key = "back"
+    if m.videoPlayer <> invalid and m.videoPlayer.visible = true
+      print "DetailsScreen: Dismissing video player on back key"
+      m.videoPlayer.visible = false
+      m.videoPlayer.control = "stop"
+      m.buttons.setFocus(true)
+      return true
+    end if
+  end if
+
+  return false
 end function
 
 

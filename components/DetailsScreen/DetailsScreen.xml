@@ -41,12 +41,20 @@
       width="1920"
       height="1080"
       color="0x000000"
-      opacity="0.8" />
+      opacity="0.62" />
+
+    <Label
+      id="TitleLabel"
+      translation="[100, 70]"
+      width="1300"
+      height="70"
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF" />
 
     <!-- Control buttons (Button List) -->
     <LabelList
       id="Buttons"
-      translation="[1440,480]"
+      translation="[1420,430]"
       color="0xFFFFFFFF"
       focusedColor="0x333333FF"
       numRows="7"
@@ -65,15 +73,32 @@
       visible="false"
       />
 
+    <Rectangle
+      id="ResolutionPanel"
+      translation="[620,220]"
+      width="680"
+      height="430"
+      color="0x17191FFF"
+      visible="false" />
+
+    <Label
+      id="ResolutionTitle"
+      text="Choose quality"
+      translation="[700,255]"
+      width="520"
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF"
+      visible="false" />
+
     <!-- Resolution selector list (modal overlay) -->
     <LabelList id="ResolutionList"
-      translation="[700,300]"
+      translation="[700,340]"
       color="0xFFFFFFFF"
       focusedColor="0x333333FF"
       numRows="5"
       vertFocusAnimationStyle="floatingFocus"
       itemSpacing="[0,20]"
-      itemSize="[500, 50]"
+      itemSize="[500, 56]"
       visible="false"
       />
 
@@ -84,42 +109,48 @@
       fadeInterval="0.5"
       visible="false" />
 
-    <!-- Black hud at bottom of the Details Screen -->
+    <Label
+      id="PlaybackStatus"
+      translation="[1380,660]"
+      width="420"
+      height="130"
+      wrap="true"
+      numLines="3"
+      font="font:SmallSystemFont"
+      color="0xD0D4DDFF"
+      visible="false" />
+
+    <!-- Readability band -->
     <Rectangle
       id="HUDRectangle"
       color="0x000000FF"
       width="1920"
-      height="300"
-      translation="[0, 780]" />
+      height="480"
+      translation="[0, 600]"
+      opacity="0.88" />
 
     <!-- Item poster -->
     <Poster
       id="Poster"
-      translation="[120, 825]"
-      width="300"
-      height="178"
+      translation="[100, 625]"
+      width="260"
+      height="390"
       loadDisplayMode="scaleToFit" />
 
     <!-- Backplate to keep text readable over bright key art -->
     <Rectangle
       id="DescriptionBackplate"
-      translation="[460, 770]"
-      width="1240"
-      height="260"
+      translation="[390, 620]"
+      width="930"
+      height="370"
       color="0x000000"
       opacity="0.65" />
 
     <!-- Item description -->
     <MediaDescription
       id="Description"
-      translation="[500, 800]"
+      translation="[430, 650]"
       itemSpacings="[7, 16]" />
-
-    <!-- Overhang Node (has to be rendered after others) -->
-    <Overhang
-      id="Overhang"
-      showClock="true"
-      title="Hero-Grid-Channel" />
 
     <!-- Playback node -->
     <Video
