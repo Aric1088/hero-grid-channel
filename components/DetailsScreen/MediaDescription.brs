@@ -3,8 +3,8 @@
  'setting top interfaces
 Sub Init()
   print "Description.brs - [Init]"
-  m.top.Title             = m.top.findNode("Title")
-  m.top.Description       = m.top.findNode("Description")
+  m.Title             = m.top.findNode("Title")
+  m.DescriptionLabel  = m.top.findNode("Description")
   
 End Sub
 
@@ -16,15 +16,15 @@ Sub OnContentChanged()
 
   title = item.title.toStr()
   if title <> invalid then
-    m.top.Title.text = title.toStr()
+    m.Title.text = title.toStr()
   end if
 
   value = item.description
   if value <> invalid then
     if value.toStr() <> "" then
-      m.top.Description.text = value.toStr()
+      m.DescriptionLabel.text = value.toStr()
     else
-      m.top.Description.text = "No description"
+      m.DescriptionLabel.text = "No description"
     end if
   end if
 

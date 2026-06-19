@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<component name="MagnetDownloader" extends="Task">
+  <interface>
+    <field id="magnetUrl" type="string" />
+    <field id="streamUrl" type="string" />
+    <field id="success" type="boolean" alwaysNotify="true" />
+  </interface>
+  
+  <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />
+  <script type="text/brightscript" uri="MagnetDownloader.brs" />
+</component>

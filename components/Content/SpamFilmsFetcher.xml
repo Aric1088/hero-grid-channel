@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- SpamFilms Content Fetcher Task -->
+<component name="SpamFilmsFetcher" extends="Task">
+  <interface>
+    <!-- Input: what to fetch -->
+    <field id="contentType" type="string" /> <!-- "movies" or "series" -->
+    <field id="page" type="integer" value="1" />
+    <field id="sort" type="string" value="trending" />
+    <field id="genre" type="string" value="All" />
+    <field id="keywords" type="string" value="" />
+    
+    <!-- Output: parsed content -->
+    <field id="content" type="node" alwaysNotify="true" />
+    <field id="hasError" type="boolean" value="false" />
+  </interface>
+  
+  <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />
+  <script type="text/brightscript" uri="pkg:/components/Content/SpamFilmsFetcher.brs" />
+</component>

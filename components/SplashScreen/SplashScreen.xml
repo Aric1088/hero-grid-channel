@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<component name="SplashScreen" extends="Group">
+  <interface>
+    <field id="ready" type="boolean" onChange="onReady" />
+    <field id="animationComplete" type="boolean" />
+  </interface>
+
+  <children>
+    <!-- Background -->
+    <Rectangle
+      id="background"
+      width="1920"
+      height="1080"
+      color="0x1a1a1a"
+      opacity="1.0" />
+    
+    <!-- Logo/Title -->
+    <Label
+      id="title"
+      text="SpamFilms"
+      translation="[960, 400]"
+      horizAlign="center"
+      vertAlign="center"
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF"
+      opacity="1.0" />
+    
+    <!-- Subtitle -->
+    <Label
+      id="subtitle"
+      text="Stream Anything"
+      translation="[960, 520]"
+      horizAlign="center"
+      vertAlign="center"
+      font="font:MediumSystemFont"
+      color="0xAAAAAA"
+      opacity="1.0" />
+    
+    <!-- Fade out animation -->
+    <Animation
+      id="fadeOut"
+      repeat="false"
+      duration="1.0">
+      <FloatFieldInterpolator
+        key="[0.0, 1.0]"
+        keyValue="[1.0, 0.0]"
+        fieldToInterp="background.opacity" />
+      <FloatFieldInterpolator
+        key="[0.0, 1.0]"
+        keyValue="[1.0, 0.0]"
+        fieldToInterp="title.opacity" />
+      <FloatFieldInterpolator
+        key="[0.0, 1.0]"
+        keyValue="[1.0, 0.0]"
+        fieldToInterp="subtitle.opacity" />
+    </Animation>
+  </children>
+  
+  <script type="text/brightscript" uri="SplashScreen.brs" />
+</component>

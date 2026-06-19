@@ -10,11 +10,30 @@ Hero Grid Sample Channel for the Roku Platform.
 This sample channel should be used as a starter template for your channel development. It demonstrates how to display content in a fairly conventional Roku UI from multiple RSS feeds performant on all devices on the Roku platform.   
 
 ## How to run this sample
+
+### Quick start (recommended)
+1. Install Node.js (if not already installed)
+2. Install dependencies: `npm install`
+3. Create a `.env` file in the project root:
+   ```
+   ROKU_DEV_TARGET=192.168.1.10
+   ROKU_DEV_PASSWORD=yourpassword
+   ```
+   (Copy `.env.example` and edit with your device IP/password)
+4. Build and deploy: `npm run deploy`
+
+**Available commands:**
+- `npm run build` – Package the app (output: `dist/apps/SpamFilms3.zip`)
+- `npm run deploy` – Build and install to Roku
+- `npm run remove` – Uninstall from Roku
+
+### Alternative methods
 - Zip up the entire project directory and deploy to your roku device. Follow the developer set-up guide here for a quick guide on how to do so: https://blog.roku.com/developer/2016/02/04/developer-setup-guide/
-- Alternatively, open up this project in Eclipse or Atom and use the corresponding plugin/package to export/deploy the channel.
+- Open up this project in Eclipse or Atom and use the corresponding plugin/package to export/deploy the channel.
   - Eclipse plugin documentation in the SDK docs: https://sdkdocs.roku.com/display/sdkdoc/Eclipse+Plugin+Guide 
   - The blog post for the Eclipse plugin: https://blog.roku.com/developer/2016/04/20/roku-eclipse-plugin/ 
   - Roku Deploy package for Atom: https://atom.io/packages/roku-deploy 
+- Use the Makefile: `make install` (requires make, curl, zip in PATH)
 - If you don't want to zip up the project, this sample is also available as a private channel:
   - Version without screen animations: https://my.roku.com/account/add?channel=HP56R2
   - Current version: https://my.roku.com/account/add?channel=NDQJKJ

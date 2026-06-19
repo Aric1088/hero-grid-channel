@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roku Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>📺 Roku Dashboard</h1>
+                <div class="header-info">
+                    <div class="status-indicator">
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">Connecting...</span>
+                    </div>
+                    <span id="rokuInfo" class="roku-info">192.168.1.155:8085</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Panel -->
+        <section class="stats-panel">
+            <div class="stat-card">
+                <div class="stat-label">Messages</div>
+                <div class="stat-value" id="statMessages">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Errors</div>
+                <div class="stat-value error" id="statErrors">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Warnings</div>
+                <div class="stat-value warning" id="statWarnings">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Uptime</div>
+                <div class="stat-value" id="statUptime">--:--:--</div>
+            </div>
+        </section>
+
+        <!-- Controls -->
+        <section class="controls">
+            <button id="clearLogsBtn" class="btn btn-secondary">Clear Logs</button>
+            <button id="reconnectBtn" class="btn btn-secondary">Reconnect</button>
+            <button id="pauseBtn" class="btn btn-secondary">Pause Auto-scroll</button>
+            <div class="filter-group">
+                <label for="filterLevel">Filter Level:</label>
+                <select id="filterLevel">
+                    <option value="">All</option>
+                    <option value="error">Errors</option>
+                    <option value="warning">Warnings</option>
+                    <option value="info">Info</option>
+                    <option value="log">Logs</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Logs Container -->
+        <section class="logs-container">
+            <div class="logs-header">
+                <span>Real-time Logs</span>
+                <span class="log-count" id="logCount">0 logs</span>
+            </div>
+            <div id="logsPanel" class="logs-panel"></div>
+        </section>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

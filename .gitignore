@@ -6,3 +6,11 @@ out/
 .tags1
 .tags
 Makefile
+node_modules/
+dist/
+.env
+roku-deploy.json
+.env.example
+build_zip.py
+dist/apps/SpamFilms3.zip
+dist/apps/SpamFilms3.zip

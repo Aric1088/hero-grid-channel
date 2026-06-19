@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ProfileGridItem" extends="Group">
+
+  <interface>
+    <field id="itemContent" type="node" onChange="onContentChange" />
+    <field id="gridHasFocus" type="boolean" onChange="onFocusChange" />
+    <field id="focusPercent" type="float" onChange="onFocusChange" />
+  </interface>
+
+  <children>
+    <Rectangle 
+      id="cardFrame" 
+      width="220" 
+      height="220" 
+      color="0x181822FF" 
+      translation="[20, 20]"
+    />
+    
+    <Rectangle 
+      id="focusBorder" 
+      width="232" 
+      height="232" 
+      color="0x8B5CF6FF"
+      translation="[14, 14]"
+      visible="false"
+    />
+    
+    <Rectangle 
+      id="cardInner" 
+      width="216" 
+      height="216" 
+      color="0x15161EFF" 
+      translation="[22, 22]"
+    />
+
+    <Label 
+      id="avatarLabel" 
+      text="AV" 
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF"
+      width="260"
+      height="260"
+      horizAlign="center" 
+      vertAlign="center"
+      translation="[0, 0]"
+    />
+
+    <Label 
+      id="nameLabel" 
+      text="Name" 
+      font="font:LargeBoldSystemFont"
+      color="0xAAAAAAFF" 
+      horizAlign="center"
+      width="260"
+      translation="[0, 260]"
+    />
+  </children>
+
+  <script type="text/brightscript" uri="pkg:/components/ProfileSelectScreen/ProfileGridItem.brs" />
+</component>

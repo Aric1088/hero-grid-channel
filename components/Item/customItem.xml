@@ -13,29 +13,77 @@
     <![CDATA[
       sub Init()
         m.Poster = m.top.findNode("poster")
+        m.Label = m.top.findNode("label")
+        m.BorderRect = m.top.findNode("BorderRect")
+        m.FallbackRect = m.top.findNode("FallbackRect")
+        m.top.observeField("focusPercent", "onFocusPercentChange")
+      end sub
+
+      sub onFocusPercentChange()
+        if m.top.focusPercent > 0.5
+           m.BorderRect.color = "0xFFFFFFFF"
+           m.Label.color = "0xFFFFFFFF"
+        else
+           m.BorderRect.color = "0x00000000"
+           m.Label.color = "0xB8B8B8FF"
+        end if
       end sub
 
       sub itemContentChanged()
-        m.Poster.loadDisplayMode = "scaleToZoom"
-        if m.top.height < 400 and m.top.width < 400
-          m.Poster.loadWidth = 300
-          m.Poster.loadHeight = 150
+        item = m.top.itemContent
+        
+        if item <> invalid
+          if item.hdPosterUrl <> invalid and item.hdPosterUrl <> ""
+             m.Poster.uri = item.hdPosterUrl
+             m.Poster.visible = true
+             m.FallbackRect.visible = false
+          else
+             m.Poster.uri = ""
+             m.Poster.visible = false
+             m.FallbackRect.visible = true
+          end if
+           
+          if item.title <> invalid and item.title <> ""
+             m.Label.text = item.title
+          else 
+             m.Label.text = "No Title"
+          end if
         end if
+
+        m.Poster.loadDisplayMode = "scaleToFit"
         updateLayout()
-        m.Poster.uri = m.top.itemContent.HDPOSTERURL
       end sub
 
       sub updateLayout()
         if m.top.height > 0 And m.top.width > 0 then
-          m.Poster.width  = m.top.width
-          m.Poster.height = m.top.height
+          m.BorderRect.width = m.top.width
+          m.BorderRect.height = m.top.height
+          m.FallbackRect.width = m.top.width - 8
+          m.FallbackRect.height = m.top.height - 8
+          m.FallbackRect.translation = [4, 4]
+          
+          m.Poster.translation = [4, 4]
+          m.Poster.width  = m.top.width - 8
+          m.Poster.height = m.top.height - 8
+          
+          m.Label.width = m.top.width
+          m.Label.height = 30
+          m.Label.translation = [0, m.top.height - 30]
         end if
       end sub
             ]]>
   </script>
 
   <children>
+      <Rectangle id="BorderRect" color="0x00000000" width="200" height="300" />
+      <Rectangle id="FallbackRect" color="0x24262DFF" width="192" height="292" translation="[4, 4]" />
       <Poster id="poster" />
+      <Label 
+        id="label" 
+        color="0xB8B8B8FF" 
+        font="font:SmallSystemFont" 
+        horizAlign="center" 
+      />
   </children>
 
 </component>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ProfileSelectScreen" extends="Group" initialFocus="profileMarkupGrid">
+
+  <interface>
+    <field id="profileSelected" type="assocarray" alwaysNotify="true" />
+  </interface>
+
+  <children>
+    <Rectangle 
+      id="bg" 
+      width="1920" 
+      height="1080" 
+      color="0x090A0FFF" />
+      
+    <Label 
+      text="Who's watching?" 
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF" 
+      horizAlign="center" 
+      vertAlign="center"
+      translation="[0, 280]"
+      width="1920"
+      height="80" />
+    
+    <MarkupGrid 
+      id="profileMarkupGrid"
+      itemComponentName="ProfileGridItem"
+      itemSize="[260, 320]"
+      numColumns="4"
+      numRows="1"
+      itemSpacing="[40, 0]"
+      translation="[380, 420]"
+      drawFocusFeedback="false"
+    />
+  </children>
+
+  <script type="text/brightscript" uri="pkg:/components/ProfileSelectScreen/ProfileSelectScreen.brs" />
+</component>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="EpisodeDetailsFetcher" extends="Task">
+  <interface>
+    <field id="episodeId" type="string" />
+    <field id="content" type="node" />
+  </interface>
+  <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />
+  <script type="text/brightscript" uri="pkg:/components/Content/SpamFilmsApi.brs" />
+  <script type="text/brightscript" uri="pkg:/components/Content/EpisodeDetailsFetcher.brs" />
+</component>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="SearchScreen" extends="Group" initialFocus="keyboard">
+
+  <interface>
+    <!-- Triggers when item is selected -->
+    <field id="contentSelected" type="node" />
+    
+    <!-- Context Aware Search: "movies" or "series" -->
+    <function name="setSearchContext" />
+    <function name="resetState" />
+  </interface>
+
+  <script type="text/brightscript" uri="SearchScreen.brs" />
+  <script type="text/brightscript" uri="pkg:/components/Content/SpamFilmsApi.brs" />
+
+  <children>
+    <Rectangle
+      id="background"
+      width="1920"
+      height="1080"
+      color="0x0B0C10FF" />
+
+    <Label
+      text="Search"
+      translation="[110, 55]"
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF" />
+
+    <Label
+      text="Find movies and TV shows"
+      translation="[110, 112]"
+      font="font:MediumSystemFont"
+      color="0xA9ADB7FF" />
+
+    <Keyboard
+      id="keyboard"
+      translation="[110, 155]" />
+
+    <Button
+      id="searchButton"
+      text="Search"
+      translation="[1580, 180]"
+      minWidth="220"
+      showFocusFootprint="true" />
+
+    <Label
+      id="statusLabel"
+      text="Enter at least 2 characters to search."
+      translation="[1580, 290]"
+      width="260"
+      wrap="true"
+      numLines="4"
+      font="font:MediumSystemFont"
+      color="0xA9ADB7FF" />
+
+    <Label
+      id="resultsHeading"
+      text="Results"
+      translation="[110, 600]"
+      font="font:MediumBoldSystemFont"
+      color="0xFFFFFFFF"
+      visible="false" />
+
+    <RowList
+      id="resultsGrid"
+      itemComponentName="customItem"
+      translation="[0, 640]"
+      focusXOffset="[110]"
+      itemSize="[1920, 205]"
+      numRows="2"
+      rowHeights="[205, 205]"
+      rowItemSize="[[140, 185]]"
+      rowItemSpacing="[[24, 0]]"
+      rowLabelOffset="[[110, 0]]"
+      showRowLabel="[true, true]"
+      showRowCounter="[true, true]"
+      rowFocusAnimationStyle="floatingFocus"
+      visible="false" />
+    
+    <!-- Loading Spinner -->
+    <LoadingIndicator 
+      id="loadingIndicator" 
+      translation="[1390, 185]"
+      text="Searching..."
+      fadeInterval="0.5"
+    />
+  </children>
+</component>

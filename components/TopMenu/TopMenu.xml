@@ -1,0 +1,31 @@
+<component name="TopMenu" extends="Group" initialFocus="MenuRowList">
+
+  <interface>
+    <field id="content" type="node" alias="MenuRowList.content" />
+    <field id="rowItemSelected" type="intarray" alias="MenuRowList.rowItemSelected" />
+    <field id="itemFocused" type="intarray" alias="MenuRowList.rowItemFocused" />
+    <field id="jumpToRowItem" type="int" alias="MenuRowList.jumpToRowItem" />
+  </interface>
+
+  <children>
+    <!-- Translucent premium glass top menu backdrop -->
+    <Rectangle 
+      id="menuBackdrop" 
+      width="1920" 
+      height="80" 
+      color="0x090A0FAA" 
+      translation="[-100, -15]"
+    />
+    <RowList
+      id="MenuRowList"
+      itemComponentName="TopMenuItem"
+      translation="[0, 0]"
+      numRows="1"
+      rowHeights="[50]"
+      rowItemSize="[[200, 50]]"
+      rowItemSpacing="[[15, 0]]"
+    />
+  </children>
+  
+  <script type="text/brightscript" uri="pkg:/components/TopMenu/TopMenu.brs" />
+</component>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="TopMenuItem" extends="Group">
+  <interface>
+    <field id="itemContent" type="node" onChange="itemContentChanged" />
+    <field id="width"       type="float" onChange="updateLayout"/>
+    <field id="height"      type="float" onChange="updateLayout"/>
+  </interface>
+
+  <script type="text/brightscript">
+    <![CDATA[
+      sub Init()
+        m.Label = m.top.findNode("label")
+        m.Bg = m.top.findNode("bg")
+        m.top.observeField("focusPercent", "onFocusPercentChange")
+      end sub
+
+      sub itemContentChanged()
+        item = m.top.itemContent
+        if item <> invalid
+           m.Label.text = item.title
+        end if
+      end sub
+
+      sub updateLayout()
+        if m.top.height > 0 And m.top.width > 0 then
+           m.Label.width = m.top.width
+           m.Label.height = m.top.height
+           m.Bg.width = m.top.width
+           m.Bg.height = m.top.height
+        end if
+      end sub
+
+      sub onFocusPercentChange()
+        if m.top.focusPercent > 0.5
+           m.Label.color = "0xFFFFFFFF" ' White
+           ' m.Bg.color = "0x333333AA" 
+        else
+           m.Label.color = "0xAAAAAAFF" ' Grey
+           ' m.Bg.color = "0x00000000"
+        end if
+      end sub
+    ]]>
+  </script>
+
+  <children>
+      <Rectangle id="bg" color="0x00000000" />
+      <Label 
+        id="label" 
+        color="0xAAAAAAFF" 
+        font="font:MediumBoldSystemFont" 
+        horizAlign="center" 
+        vertAlign="center"
+      />
+  </children>
+</component>

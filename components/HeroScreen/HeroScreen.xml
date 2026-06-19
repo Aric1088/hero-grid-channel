@@ -20,10 +20,10 @@
       itemSize="[1920,220]"
       numRows="9"
       
-      rowFocusAnimationStyle="FixedFocusWrap"
+      rowFocusAnimationStyle="floatingFocus"
       rowHeights="[615,615,615]"
       rowItemSize="[[375,526],[375,526],[375,526],[375,197]]"
-      rowItemSpacing="[[30,0]]"
+      rowItemSpacing="[[40,0]]"
       rowLabelOffset="[[165,8]]"
       showRowLabel="[true,true,true]"
       showRowCounter="[true,true,true,false]"
@@ -52,8 +52,11 @@
 
     <!-- # of requests that have bad/no content (not a 200 response) -->
     <field id="numBadRequests" type="integer"/>
+    
+    <function name="loadCategory" />
   </interface>
 
   <script type="text/brightscript" uri="pkg:/components/HeroScreen/HeroScreen.brs" />
 
+  <script type="text/brightscript" uri="pkg:/components/WatchlistHelper.brs" />
 </component>

@@ -54,6 +54,36 @@
       itemSpacing="[0,25]"
       itemSize="[320, 40]" />
 
+    <!-- Semi-transparent backdrop for resolution selector -->
+    <Rectangle
+      id="ResolutionBackdrop"
+      translation="[0,0]"
+      width="1920"
+      height="1080"
+      color="0x000000"
+      opacity="0.5"
+      visible="false"
+      />
+
+    <!-- Resolution selector list (modal overlay) -->
+    <LabelList id="ResolutionList"
+      translation="[700,300]"
+      color="0xFFFFFFFF"
+      focusedColor="0x333333FF"
+      numRows="5"
+      vertFocusAnimationStyle="floatingFocus"
+      itemSpacing="[0,20]"
+      itemSize="[500, 50]"
+      visible="false"
+      />
+
+    <LoadingIndicator
+      id="LoadingIndicator"
+      centered="true"
+      text="Loading Streams..."
+      fadeInterval="0.5"
+      visible="false" />
+
     <!-- Black hud at bottom of the Details Screen -->
     <Rectangle
       id="HUDRectangle"
@@ -70,8 +100,17 @@
       height="178"
       loadDisplayMode="scaleToFit" />
 
+    <!-- Backplate to keep text readable over bright key art -->
+    <Rectangle
+      id="DescriptionBackplate"
+      translation="[460, 770]"
+      width="1240"
+      height="260"
+      color="0x000000"
+      opacity="0.65" />
+
     <!-- Item description -->
-    <Description
+    <MediaDescription
       id="Description"
       translation="[500, 800]"
       itemSpacings="[7, 16]" />
@@ -94,13 +133,17 @@
 
     <interface>
       <!-- Button press handler -->
-      <field id="itemSelected" type="integer" alwaysnotify="true" alias="Buttons.itemSelected" onChange="onItemSelected" />
+      <field id="itemSelected" type="integer" alwaysnotify="true" alias="Buttons.itemSelected" />
       <!-- Playback flag -->
-      <field id="videoPlayerVisible" type="bool" alwaysnotify="true" alias="VideoPlayer.visible"  onChange="onVideoVisibleChange" />
+      <field id="videoPlayerVisible" type="bool" alwaysnotify="true" alias="VideoPlayer.visible" />
       <!-- Content fields -->
       <field id="content" type="node" alwaysnotify="true" onChange="OnContentChange" />
     </interface>
 
     <!-- main handler -->
+    <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />
     <script type="text/brightscript" uri="pkg:/components/DetailsScreen/DetailsScreen.brs" />
+  <script type="text/brightscript" uri="pkg:/components/WatchlistHelper.brs" />
 </component>
+
+

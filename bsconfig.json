@@ -1,0 +1,12 @@
+{
+  "host": "192.168.1.155",
+  "password": "1088",
+  "rootDir": ".",
+  "files": [
+    "manifest",
+    "source/**/*",
+    "components/**/*",
+    "images/**/*"
+  ],
+  "outDir": "./out"
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="EpisodeSelectScreen" extends="Group" initialFocus="episodeList">
+
+  <interface>
+    <field id="item" type="node" />
+    <field id="contentSelected" type="node" />
+    <field id="rowItemSelected" type="intarray" alias="episodeList.rowItemSelected" alwaysNotify="true" />
+    <function name="selectFocusedEpisode" />
+    <function name="prepareForDisplay" />
+  </interface>
+
+  <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />
+  <script type="text/brightscript" uri="EpisodeSelectScreen.brs" />
+
+  <children>
+    <LayoutGroup translation="[50, 50]" itemSpacings="[20]">
+      <!-- Header with Series Info -->
+      <Label id="seriesTitle" font="font:LargeBoldSystemFont" color="0xFFFFFFFF" />
+      <Label id="seriesDesc" font="font:SmallSystemFont" color="0xCCCCCCFF" wrap="true" width="1000" numLines="3" />
+      
+      <!-- Episodes Grid (RowList where each row is a season) -->
+      <RowList 
+        id="episodeList"
+        itemComponentName="customItem"
+        numRows="3"
+        itemSize="[1920, 220]"
+        rowItemSize="[[320, 180]]"
+        rowItemSpacing="[[20, 0]]"
+        showRowLabel="true"
+        rowLabelOffset="[[0, 15]]"
+        translation="[0, 20]" 
+        visible="false"/>
+        
+       <LoadingIndicator 
+        id="loadingIndicator" 
+        centered="true" 
+        text="Loading Seasons..."
+      />
+    </LayoutGroup>
+  </children>
+</component>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="SeriesDetailsFetcher" extends="Task">
+  <interface>
+    <field id="imdbId" type="string" />
+    <field id="content" type="node" />
+  </interface>
+  <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />
+  <script type="text/brightscript" uri="SeriesDetailsFetcher.brs" />
+  <script type="text/brightscript" uri="SpamFilmsApi.brs" />
+</component>
