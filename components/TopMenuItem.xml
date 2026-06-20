@@ -11,6 +11,7 @@
       sub Init()
         m.Label = m.top.findNode("label")
         m.Bg = m.top.findNode("bg")
+        m.Indicator = m.top.findNode("indicator")
         m.top.observeField("focusPercent", "onFocusPercentChange")
       end sub
 
@@ -27,31 +28,36 @@
            m.Label.height = m.top.height
            m.Bg.width = m.top.width
            m.Bg.height = m.top.height
+           m.Indicator.width = m.top.width - 52
+           m.Indicator.translation = [26, m.top.height - 5]
         end if
       end sub
 
       sub onFocusPercentChange()
         if m.top.focusPercent > 0.5
-           m.Label.color = "0xFFFFFFFF" ' White
-           ' m.Bg.color = "0x333333AA" 
+           m.Label.color = "0xFFFFFFFF"
+           m.Bg.color = "0x242933FF"
+           m.Indicator.visible = true
         else
-           m.Label.color = "0xAAAAAAFF" ' Grey
-           ' m.Bg.color = "0x00000000"
+           m.Label.color = "0xA9AFBAFF"
+           m.Bg.color = "0x00000000"
+           m.Indicator.visible = false
         end if
       end sub
     ]]>
   </script>
 
   <children>
-      <Rectangle id="bg" color="0x00000000" width="200" height="50" />
+      <Rectangle id="bg" color="0x00000000" width="170" height="64" />
+      <Rectangle id="indicator" color="0x35C2FFFF" width="118" height="4" translation="[26,59]" visible="false" />
       <Label 
         id="label" 
         color="0xAAAAAAFF" 
-        font="font:MediumBoldSystemFont" 
+        font="font:MediumSystemFont"
         horizAlign="center" 
         vertAlign="center"
-        width="200"
-        height="50"
+        width="170"
+        height="64"
       />
   </children>
 </component>

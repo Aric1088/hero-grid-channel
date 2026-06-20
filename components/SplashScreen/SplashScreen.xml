@@ -12,14 +12,16 @@
       id="background"
       width="1920"
       height="1080"
-      color="0x1a1a1a"
+      color="0x090B10FF"
       opacity="1.0" />
     
     <!-- Logo/Title -->
     <Label
       id="title"
       text="SpamFilms"
-      translation="[960, 400]"
+      translation="[0, 405]"
+      width="1920"
+      height="90"
       horizAlign="center"
       vertAlign="center"
       font="font:LargeBoldSystemFont"
@@ -29,13 +31,17 @@
     <!-- Subtitle -->
     <Label
       id="subtitle"
-      text="Stream Anything"
-      translation="[960, 520]"
+      text="Movies and television, one library"
+      translation="[0, 520]"
+      width="1920"
+      height="60"
       horizAlign="center"
       vertAlign="center"
       font="font:MediumSystemFont"
-      color="0xAAAAAA"
+      color="0xA9AFBAFF"
       opacity="1.0" />
+    <Rectangle id="accent" translation="[900, 500]" width="120" height="5"
+      color="0x35C2FFFF" opacity="1.0" />
     
     <!-- Fade out animation -->
     <Animation
@@ -54,6 +60,10 @@
         key="[0.0, 1.0]"
         keyValue="[1.0, 0.0]"
         fieldToInterp="subtitle.opacity" />
+      <FloatFieldInterpolator
+        key="[0.0, 1.0]"
+        keyValue="[1.0, 0.0]"
+        fieldToInterp="accent.opacity" />
     </Animation>
   </children>
   

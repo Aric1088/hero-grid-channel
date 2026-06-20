@@ -10,31 +10,62 @@
       width="1920"
       height="1080"
       color="0x000000"
-      ShadeOpacity="0.8" />
+      ShadeOpacity="0.48" />
+
+    <Rectangle
+      width="1920"
+      height="1080"
+      color="0x07090DFF"
+      opacity="0.28" />
+
+    <Rectangle
+      translation="[0, 300]"
+      width="1920"
+      height="780"
+      color="0x07090DF2" />
+
+    <Label
+      id="HeroEyebrow"
+      text="FEATURED"
+      translation="[96, 154]"
+      width="740"
+      height="32"
+      font="font:SmallBoldSystemFont"
+      color="0x35C2FFFF" />
+
+    <Label
+      id="HeroTitle"
+      translation="[96, 184]"
+      width="980"
+      height="60"
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF" />
+
+    <Label
+      id="HeroDescription"
+      translation="[96, 247]"
+      width="980"
+      height="64"
+      numLines="2"
+      wrap="true"
+      font="font:SmallSystemFont"
+      color="0xD5D9E1FF" />
 
     <!-- The main content -->
     <RowList
 	    id="RowList"
       itemComponentName="customItem"
-      focusXOffset="[165]"
-      itemSize="[1920,220]"
+      focusXOffset="[96]"
+      itemSize="[1920,390]"
       numRows="9"
-      
       rowFocusAnimationStyle="floatingFocus"
-      rowHeights="[615,615,615]"
-      rowItemSize="[[375,526],[375,526],[375,526],[375,197]]"
-      rowItemSpacing="[[40,0]]"
-      rowLabelOffset="[[165,8]]"
+      rowHeights="[390,390,390,390,390,390,390,390,390]"
+      rowItemSize="[[210,315]]"
+      rowItemSpacing="[[28,0]]"
+      rowLabelOffset="[[96,-18]]"
       showRowLabel="[true,true,true]"
-      showRowCounter="[true,true,true,false]"
-      translation="[0,155]"/>
-
-    <!-- For transition animation -->
-    <Poster
-      translation="[0,1000]"
-      uri="pkg:/images/BG_dark_down.png"
-      width="2000"
-      height="95" />
+      showRowCounter="[false,false,false,false]"
+      translation="[0,340]"/>
   </children>
 
   <interface>

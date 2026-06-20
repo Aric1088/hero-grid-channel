@@ -1,51 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="SettingsScreen" extends="Group" initialFocus="saveButton">
-
   <children>
-    <Rectangle 
-      id="background" 
-      width="1920" 
-      height="1080" 
-      color="0x0F0F14E6" 
-      translation="[0,0]" />
-
-    <LayoutGroup translation="[100, 120]" itemSpacings="[20]">
-      <!-- Header -->
-      <Label text="SpamFilms Server Settings" font="font:LargeBoldSystemFont" color="0xFFFFFFFF" />
-      
-      <!-- Instructions -->
-      <Label text="Type your SpamFilms backend server URL below (e.g. http://192.168.1.100:8080 or https://your-server.ddns.net:8080):" font="font:MediumSystemFont" color="0xAAAAAAFF" />
-      
-      <!-- Current Server Value -->
-      <Label id="currentUrlLabel" text="Active Server: https://spamfilms.ddns.net:8080" font="font:MediumBoldSystemFont" color="0x8B5CF6FF" />
-      
-      <!-- Keyboard to Type URL -->
-      <Keyboard id="keyboard" />
-      
-      <!-- Buttons -->
-      <LayoutGroup layoutDirection="horiz" itemSpacings="[30]">
-        <Button 
-          id="saveButton" 
-          text="Save &amp; Test Connection" 
-          minWidth="350"
-          showFocusFootprint="true"
-        />
-        <Button 
-          id="resetButton" 
-          text="Reset to Default" 
-          minWidth="250"
-          showFocusFootprint="true"
-        />
-      </LayoutGroup>
-      
-      <!-- Status Output -->
-      <Label id="statusLabel" text="" font="font:MediumBoldSystemFont" color="0xFFFFFFFF" />
-    </LayoutGroup>
-    
-    <!-- Test Task Node -->
+    <Rectangle id="background" width="1920" height="1080" color="0x090B10FF" />
+    <Label text="Settings" translation="[96, 62]" width="650" height="60"
+      font="font:LargeBoldSystemFont" color="0xFFFFFFFF" />
+    <Label text="Connection" translation="[96, 140]" width="500" height="40"
+      font="font:MediumBoldSystemFont" color="0x35C2FFFF" />
+    <Label
+      text="Change the server used by this Roku. This is normally only needed for local or recovery setups."
+      translation="[96, 188]" width="1320" height="58" numLines="2" wrap="true"
+      font="font:SmallSystemFont" color="0xA9AFBAFF" />
+    <Rectangle translation="[96, 264]" width="1500" height="100" color="0x171B22FF" />
+    <Label text="ACTIVE SERVER" translation="[124, 280]" width="250" height="28"
+      font="font:SmallBoldSystemFont" color="0x7F8895FF" />
+    <Label id="currentUrlLabel" text="https://spamfilms.ddns.net:8080"
+      translation="[124, 314]" width="1400" height="38"
+      font="font:MediumBoldSystemFont" color="0xFFFFFFFF" />
+    <Keyboard id="keyboard" translation="[96, 388]" />
+    <Button id="saveButton" text="Save and test" translation="[96, 830]"
+      minWidth="300" showFocusFootprint="true" />
+    <Button id="resetButton" text="Reset default" translation="[430, 830]"
+      minWidth="260" showFocusFootprint="true" />
+    <Label id="statusLabel" text="" translation="[96, 930]" width="1300" height="55"
+      font="font:MediumBoldSystemFont" color="0xFFFFFFFF" />
     <SpamFilmsFetcher id="testFetcher" />
   </children>
-  
   <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />
   <script type="text/brightscript" uri="pkg:/components/SettingsScreen/SettingsScreen.brs" />
 </component>

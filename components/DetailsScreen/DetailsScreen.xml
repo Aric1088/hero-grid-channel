@@ -41,11 +41,14 @@
       width="1920"
       height="1080"
       color="0x000000"
-      opacity="0.62" />
+      opacity="0.52" />
+
+    <Label text="DETAILS" translation="[96, 54]" width="300" height="30"
+      font="font:SmallBoldSystemFont" color="0x35C2FFFF" />
 
     <Label
       id="TitleLabel"
-      translation="[100, 70]"
+      translation="[96, 88]"
       width="1300"
       height="70"
       font="font:LargeBoldSystemFont"
@@ -54,9 +57,9 @@
     <!-- Control buttons (Button List) -->
     <LabelList
       id="Buttons"
-      translation="[1420,430]"
+      translation="[1400,430]"
       color="0xFFFFFFFF"
-      focusedColor="0x333333FF"
+      focusedColor="0x11151BFF"
       numRows="7"
       vertFocusAnimationStyle="floatingFocus"
       itemSpacing="[0,25]"
@@ -78,7 +81,7 @@
       translation="[620,220]"
       width="680"
       height="430"
-      color="0x17191FFF"
+      color="0x171B22FF"
       visible="false" />
 
     <Label
@@ -94,7 +97,7 @@
     <LabelList id="ResolutionList"
       translation="[700,340]"
       color="0xFFFFFFFF"
-      focusedColor="0x333333FF"
+      focusedColor="0x11151BFF"
       numRows="5"
       vertFocusAnimationStyle="floatingFocus"
       itemSpacing="[0,20]"
@@ -132,7 +135,7 @@
     <!-- Item poster -->
     <Poster
       id="Poster"
-      translation="[100, 625]"
+      translation="[96, 625]"
       width="260"
       height="390"
       loadDisplayMode="scaleToFit" />
@@ -140,7 +143,7 @@
     <!-- Backplate to keep text readable over bright key art -->
     <Rectangle
       id="DescriptionBackplate"
-      translation="[390, 620]"
+      translation="[385, 620]"
       width="930"
       height="370"
       color="0x000000"
@@ -149,7 +152,7 @@
     <!-- Item description -->
     <MediaDescription
       id="Description"
-      translation="[430, 650]"
+      translation="[425, 650]"
       itemSpacings="[7, 16]" />
 
     <!-- Playback node -->

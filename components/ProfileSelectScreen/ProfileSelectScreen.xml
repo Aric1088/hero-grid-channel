@@ -10,7 +10,11 @@
       id="bg" 
       width="1920" 
       height="1080" 
-      color="0x090A0FFF" />
+      color="0x090B10FF" />
+
+    <Label text="SPAMFILMS" translation="[96, 62]" width="360" height="48"
+      font="font:LargeBoldSystemFont" color="0xFFFFFFFF" />
+    <Rectangle translation="[96, 116]" width="72" height="4" color="0x35C2FFFF" />
       
     <Label 
       text="Who's watching?" 
@@ -18,18 +22,22 @@
       color="0xFFFFFFFF" 
       horizAlign="center" 
       vertAlign="center"
-      translation="[0, 280]"
+      translation="[0, 245]"
       width="1920"
       height="80" />
+
+    <Label text="Choose a profile to continue" font="font:MediumSystemFont"
+      color="0x939BA8FF" horizAlign="center" translation="[0, 320]"
+      width="1920" height="50" />
     
     <MarkupGrid 
       id="profileMarkupGrid"
       itemComponentName="ProfileGridItem"
-      itemSize="[260, 320]"
+      itemSize="[250, 330]"
       numColumns="4"
       numRows="1"
-      itemSpacing="[40, 0]"
-      translation="[380, 420]"
+      itemSpacing="[44, 0]"
+      translation="[390, 410]"
       drawFocusFeedback="false"
     />
   </children>

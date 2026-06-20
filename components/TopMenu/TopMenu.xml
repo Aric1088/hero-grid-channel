@@ -8,26 +8,50 @@
   </interface>
 
   <children>
-    <!-- Translucent premium glass top menu backdrop -->
     <Rectangle 
       id="menuBackdrop" 
       width="1920" 
-      height="80" 
-      color="0x090A0FAA" 
-      translation="[-100, -15]"
+      height="118"
+      color="0x090B10F2"
     />
+    <Label
+      text="SPAMFILMS"
+      translation="[96, 35]"
+      width="260"
+      height="48"
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF" />
+    <Rectangle
+      translation="[96, 88]"
+      width="72"
+      height="4"
+      color="0x35C2FFFF" />
     <RowList
       id="MenuRowList"
       itemComponentName="TopMenuItem"
-      itemSize="[1920, 50]"
+      itemSize="[1120, 64]"
       numRows="1"
-      rowHeights="[50]"
-      rowItemSize="[[200, 50]]"
-      rowItemSpacing="[[15, 0]]"
+      rowHeights="[64]"
+      rowItemSize="[[170, 64]]"
+      rowItemSpacing="[[8, 0]]"
       showRowLabel="[false]"
       showRowCounter="[false]"
-      translation="[0, 0]"
+      translation="[410, 28]"
     />
+    <Rectangle
+      translation="[1740, 30]"
+      width="58"
+      height="58"
+      color="0x252A33FF" />
+    <Label
+      text="AD"
+      translation="[1740, 30]"
+      width="58"
+      height="58"
+      horizAlign="center"
+      vertAlign="center"
+      font="font:SmallBoldSystemFont"
+      color="0xFFFFFFFF" />
   </children>
   
   <script type="text/brightscript" uri="pkg:/components/TopMenu/TopMenu.brs" />

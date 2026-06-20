@@ -210,8 +210,8 @@ sub showInputMode()
   m.keyboard.visible = true
   m.searchSubtitle.visible = true
   m.searchButton.text = "Search"
-  m.searchButton.translation = [1580, 500]
-  m.statusLabel.translation = [1510, 620]
+  m.searchButton.translation = [1570, 500]
+  m.statusLabel.translation = [1500, 620]
   m.statusLabel.width = 300
   m.resultsHeading.visible = false
   m.resultsGrid.visible = false
@@ -222,8 +222,8 @@ sub showResultsMode()
   m.keyboard.visible = false
   m.searchSubtitle.visible = false
   m.searchButton.text = "Edit Search"
-  m.searchButton.translation = [110, 115]
-  m.statusLabel.translation = [430, 145]
+  m.searchButton.translation = [96, 115]
+  m.statusLabel.translation = [410, 145]
   m.statusLabel.width = 600
   m.resultsHeading.visible = true
   m.resultsGrid.visible = true

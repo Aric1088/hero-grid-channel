@@ -18,36 +18,36 @@
       id="background"
       width="1920"
       height="1080"
-      color="0x0B0C10FF" />
+      color="0x090B10FF" />
 
     <Label
       text="Search"
-      translation="[110, 55]"
+      translation="[96, 55]"
       font="font:LargeBoldSystemFont"
       color="0xFFFFFFFF" />
 
     <Label
       id="searchSubtitle"
       text="Find movies and TV shows"
-      translation="[110, 112]"
+      translation="[96, 112]"
       font="font:MediumSystemFont"
       color="0xA9ADB7FF" />
 
     <Keyboard
       id="keyboard"
-      translation="[110, 155]" />
+      translation="[96, 155]" />
 
     <Button
       id="searchButton"
       text="Search"
-      translation="[1580, 500]"
+      translation="[1570, 500]"
       minWidth="220"
       showFocusFootprint="true" />
 
     <Label
       id="statusLabel"
       text="Enter at least 2 characters to search."
-      translation="[1510, 620]"
+      translation="[1500, 620]"
       width="300"
       wrap="true"
       numLines="4"
@@ -57,7 +57,7 @@
     <Label
       id="resultsHeading"
       text="Results"
-      translation="[110, 220]"
+      translation="[96, 220]"
       font="font:MediumBoldSystemFont"
       color="0xFFFFFFFF"
       visible="false" />
@@ -66,15 +66,15 @@
       id="resultsGrid"
       itemComponentName="customItem"
       translation="[0, 260]"
-      focusXOffset="[110]"
-      itemSize="[1920, 330]"
+      focusXOffset="[96]"
+      itemSize="[1920, 380]"
       numRows="2"
-      rowHeights="[330, 330]"
-      rowItemSize="[[180, 270]]"
+      rowHeights="[380, 380]"
+      rowItemSize="[[210, 315]]"
       rowItemSpacing="[[28, 0]]"
-      rowLabelOffset="[[110, 0]]"
+      rowLabelOffset="[[96, 0]]"
       showRowLabel="[true, true]"
-      showRowCounter="[true, true]"
+      showRowCounter="[false, false]"
       rowFocusAnimationStyle="floatingFocus"
       visible="false" />
     

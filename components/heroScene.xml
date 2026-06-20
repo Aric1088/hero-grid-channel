@@ -7,7 +7,7 @@
     <HeroScreen
       id="HeroScreen"
       visible="false"
-      translation="[0, 200]"/>
+      translation="[0, 0]"/>
 
     <!-- Details screen with play button -->
     <DetailsScreen
@@ -32,15 +32,9 @@
       visible="false"
       translation="[0, 0]" />
 
-    <Overhang
-      id="Overhang"
-      showClock="true"
-      title="SpamFilms3" 
-      visible="false" />
-
     <TopMenu
       id="TopMenu"
-      translation="[100, 100]"
+      translation="[0, 0]"
       visible="false" />
       
     <!-- Profile Select Screen -->

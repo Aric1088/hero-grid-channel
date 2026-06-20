@@ -13,29 +13,57 @@
   <script type="text/brightscript" uri="EpisodeSelectScreen.brs" />
 
   <children>
-    <LayoutGroup translation="[50, 50]" itemSpacings="[20]">
-      <!-- Header with Series Info -->
-      <Label id="seriesTitle" font="font:LargeBoldSystemFont" color="0xFFFFFFFF" />
-      <Label id="seriesDesc" font="font:SmallSystemFont" color="0xCCCCCCFF" wrap="true" width="1000" numLines="3" />
-      
-      <!-- Episodes Grid (RowList where each row is a season) -->
-      <RowList 
-        id="episodeList"
-        itemComponentName="customItem"
-        numRows="3"
-        itemSize="[1920, 220]"
-        rowItemSize="[[320, 180]]"
-        rowItemSpacing="[[20, 0]]"
-        showRowLabel="true"
-        rowLabelOffset="[[0, 15]]"
-        translation="[0, 20]" 
-        visible="false"/>
-        
-       <LoadingIndicator 
-        id="loadingIndicator" 
-        centered="true" 
-        text="Loading Seasons..."
-      />
-    </LayoutGroup>
+    <Rectangle width="1920" height="1080" color="0x090B10FF" />
+    <Label
+      text="SERIES"
+      translation="[96, 62]"
+      width="500"
+      height="30"
+      font="font:SmallBoldSystemFont"
+      color="0x35C2FFFF" />
+    <Label
+      id="seriesTitle"
+      translation="[96, 96]"
+      width="1100"
+      height="60"
+      font="font:LargeBoldSystemFont"
+      color="0xFFFFFFFF" />
+    <Label
+      id="seriesDesc"
+      translation="[96, 162]"
+      font="font:SmallSystemFont"
+      color="0xB8BEC9FF"
+      wrap="true"
+      width="1180"
+      height="72"
+      numLines="3" />
+    <Label
+      id="episodeHint"
+      text="Choose an episode"
+      translation="[1515, 192]"
+      width="300"
+      horizAlign="right"
+      font="font:SmallSystemFont"
+      color="0x7E8795FF" />
+    <RowList
+      id="episodeList"
+      itemComponentName="EpisodeItem"
+      numRows="20"
+      itemSize="[1920, 315]"
+      rowHeights="[315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315]"
+      rowItemSize="[[320, 242]]"
+      rowItemSpacing="[[28, 0]]"
+      showRowLabel="true"
+      showRowCounter="false"
+      rowLabelOffset="[[96, -18]]"
+      focusXOffset="[96]"
+      rowFocusAnimationStyle="floatingFocus"
+      translation="[0, 258]"
+      visible="false" />
+    <LoadingIndicator
+      id="loadingIndicator"
+      centered="true"
+      backgroundOpacity="0.15"
+      text="Loading seasons..." />
   </children>
 </component>

@@ -3,7 +3,6 @@ sub init()
   print "HeroScene.brs - [init] - Starting scene initialization"
 
   m.TopMenu = m.top.findNode("TopMenu")
-  m.Overhang = m.top.findNode("Overhang")
   m.HeroScreen = m.top.findNode("HeroScreen")
   m.DetailsScreen = m.top.findNode("DetailsScreen")
   m.SettingsScreen = m.top.findNode("SettingsScreen")
@@ -157,7 +156,6 @@ sub toggleSearch()
     m.SettingsScreen.visible = false
     m.EpisodeSelectScreen.visible = false
     m.DetailsScreen.visible = false
-    m.Overhang.visible = false
     m.TopMenu.visible = false
     m.SearchScreen.callFunc("setSearchContext", "all")
     m.SearchScreen.callFunc("resetState")
@@ -175,7 +173,6 @@ sub toggleSettings()
     m.SearchScreen.visible = false
     m.EpisodeSelectScreen.visible = false
     m.DetailsScreen.visible = false
-    m.Overhang.visible = false
     m.TopMenu.visible = false
     m.SettingsScreen.visible = true
     m.SettingsScreen.setFocus(true)
@@ -199,7 +196,6 @@ sub showDashboard()
   m.SplashScreen.visible = false
   m.ProfileSelectScreen.visible = false
   m.HeroScreen.visible = true
-  m.Overhang.visible = true
   m.TopMenu.visible = true
   m.HeroScreen.setFocus(true)
 end sub
@@ -250,7 +246,6 @@ sub showEpisodeSelectScreen(item as object)
   m.SearchScreen.visible = false
   m.SettingsScreen.visible = false
   m.DetailsScreen.visible = false
-  m.Overhang.visible = false
   m.TopMenu.visible = false
   m.EpisodeSelectScreen.item = item
   m.EpisodeSelectScreen.visible = true
@@ -273,7 +268,6 @@ sub showDetailsScreen(item as object)
 
   m.HeroScreen.visible = false
   m.EpisodeSelectScreen.visible = false
-  m.Overhang.visible = false
   m.TopMenu.visible = false
 
   m.DetailsScreen.content = item
@@ -283,11 +277,9 @@ end sub
 
 sub onVideoPlayerVisibleChange()
   if m.DetailsScreen.videoPlayerVisible = true
-    m.Overhang.visible = false
     m.TopMenu.visible = false
   else
     if m.SplashScreen.visible = false and m.ProfileSelectScreen.visible = false and m.DetailsScreen.visible = false and m.EpisodeSelectScreen.visible = false
-      m.Overhang.visible = true
       m.TopMenu.visible = true
     end if
   end if

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="EpisodeItem" extends="Group">
+  <interface>
+    <field id="itemContent" type="node" onChange="onContentChanged" />
+    <field id="width" type="float" onChange="updateLayout" />
+    <field id="height" type="float" onChange="updateLayout" />
+  </interface>
+
+  <children>
+    <Rectangle id="focusBorder" color="0x00000000" />
+    <Rectangle id="fallback" color="0x20252DFF" />
+    <Poster id="thumbnail" loadDisplayMode="scaleToZoom" />
+    <Rectangle id="imageScrim" color="0x07090DCC" />
+    <Label id="episodeNumber" font="font:SmallBoldSystemFont" color="0x35C2FFFF" />
+    <Label id="title" font="font:SmallBoldSystemFont" color="0xFFFFFFFF" numLines="2" wrap="true" />
+  </children>
+
+  <script type="text/brightscript">
+    <![CDATA[
+      sub init()
+        m.border = m.top.findNode("focusBorder")
+        m.fallback = m.top.findNode("fallback")
+        m.thumbnail = m.top.findNode("thumbnail")
+        m.scrim = m.top.findNode("imageScrim")
+        m.number = m.top.findNode("episodeNumber")
+        m.title = m.top.findNode("title")
+        m.top.observeField("focusPercent", "onFocusChanged")
+      end sub
+
+      sub onContentChanged()
+        item = m.top.itemContent
+        if item = invalid then return
+        m.title.text = item.title
+        m.thumbnail.uri = item.hdPosterUrl
+        episodeNum = item.getField("episodeNum")
+        if episodeNum <> invalid
+          m.number.text = "EPISODE " + episodeNum.toStr()
+        else
+          m.number.text = "EPISODE"
+        end if
+        updateLayout()
+      end sub
+
+      sub onFocusChanged()
+        if m.top.focusPercent > 0.5
+          m.border.color = "0x35C2FFFF"
+          m.top.scale = [1.035, 1.035]
+        else
+          m.border.color = "0x00000000"
+          m.top.scale = [1.0, 1.0]
+        end if
+      end sub
+
+      sub updateLayout()
+        if m.top.width <= 0 or m.top.height <= 0 then return
+        w = m.top.width
+        h = m.top.height
+        imageHeight = h - 62
+        m.border.width = w
+        m.border.height = h
+        m.fallback.translation = [4, 4]
+        m.fallback.width = w - 8
+        m.fallback.height = imageHeight - 4
+        m.thumbnail.translation = [4, 4]
+        m.thumbnail.width = w - 8
+        m.thumbnail.height = imageHeight - 4
+        m.scrim.translation = [4, imageHeight - 45]
+        m.scrim.width = w - 8
+        m.scrim.height = 45
+        m.number.translation = [16, imageHeight - 38]
+        m.number.width = w - 32
+        m.number.height = 32
+        m.title.translation = [8, imageHeight + 7]
+        m.title.width = w - 16
+        m.title.height = 54
+      end sub
+    ]]>
+  </script>
+</component>

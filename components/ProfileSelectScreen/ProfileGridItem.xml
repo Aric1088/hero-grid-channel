@@ -8,38 +8,19 @@
   </interface>
 
   <children>
-    <Rectangle 
-      id="cardFrame" 
-      width="220" 
-      height="220" 
-      color="0x181822FF" 
-      translation="[20, 20]"
-    />
-    
-    <Rectangle 
-      id="focusBorder" 
-      width="232" 
-      height="232" 
-      color="0x8B5CF6FF"
-      translation="[14, 14]"
-      visible="false"
-    />
-    
-    <Rectangle 
-      id="cardInner" 
-      width="216" 
-      height="216" 
-      color="0x15161EFF" 
-      translation="[22, 22]"
-    />
+    <Rectangle id="shadow" width="218" height="218" color="0x00000080" translation="[20, 28]" />
+    <Rectangle id="focusBorder" width="230" height="230" color="0x35C2FFFF"
+      translation="[10, 10]" visible="false" />
+    <Rectangle id="cardFrame" width="220" height="220" color="0x273443FF"
+      translation="[15, 15]" />
 
     <Label 
       id="avatarLabel" 
       text="AV" 
       font="font:LargeBoldSystemFont"
       color="0xFFFFFFFF"
-      width="260"
-      height="260"
+      width="250"
+      height="250"
       horizAlign="center" 
       vertAlign="center"
       translation="[0, 0]"
@@ -51,8 +32,8 @@
       font="font:LargeBoldSystemFont"
       color="0xAAAAAAFF" 
       horizAlign="center"
-      width="260"
-      translation="[0, 260]"
+      width="250"
+      translation="[0, 258]"
     />
   </children>
 

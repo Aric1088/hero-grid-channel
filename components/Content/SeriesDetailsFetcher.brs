@@ -37,6 +37,7 @@ sub fetchDetails()
       sKey = s.toStr()
       if seasons[sKey] <> invalid
         seasonDeps = seasons[sKey]
+        seasonNum = s
         
         row = CreateObject("roSGNode", "ContentNode")
         row.Title = "Season " + sKey

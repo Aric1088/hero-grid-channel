@@ -6,7 +6,7 @@
   <children>
     <Label
       id="Title"
-      color="0xFFFFFF"
+      color="0xFFFFFFFF"
       font="font:LargeBoldSystemFont"
       width="900"
       height="58"
@@ -16,7 +16,7 @@
 
     <Label
       id="Description"
-      color="0xFFFFFF"
+      color="0xD5D9E1FF"
       wrap="true"
       width="880"
       height="250"

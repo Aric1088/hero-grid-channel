@@ -16,16 +16,19 @@
         m.Label = m.top.findNode("label")
         m.BorderRect = m.top.findNode("BorderRect")
         m.FallbackRect = m.top.findNode("FallbackRect")
+        m.LabelScrim = m.top.findNode("LabelScrim")
         m.top.observeField("focusPercent", "onFocusPercentChange")
       end sub
 
       sub onFocusPercentChange()
         if m.top.focusPercent > 0.5
-           m.BorderRect.color = "0xFFFFFFFF"
+           m.BorderRect.color = "0x35C2FFFF"
            m.Label.color = "0xFFFFFFFF"
+           m.top.scale = [1.04, 1.04]
         else
            m.BorderRect.color = "0x00000000"
-           m.Label.color = "0xB8B8B8FF"
+           m.Label.color = "0xE3E6EBFF"
+           m.top.scale = [1.0, 1.0]
         end if
       end sub
 
@@ -50,7 +53,7 @@
           end if
         end if
 
-        m.Poster.loadDisplayMode = "scaleToFit"
+        m.Poster.loadDisplayMode = "scaleToZoom"
         updateLayout()
       end sub
 
@@ -66,9 +69,12 @@
           m.Poster.width  = m.top.width - 8
           m.Poster.height = m.top.height - 8
           
-          m.Label.width = m.top.width
-          m.Label.height = 30
-          m.Label.translation = [0, m.top.height - 30]
+          m.LabelScrim.width = m.top.width - 8
+          m.LabelScrim.height = 62
+          m.LabelScrim.translation = [4, m.top.height - 66]
+          m.Label.width = m.top.width - 28
+          m.Label.height = 54
+          m.Label.translation = [14, m.top.height - 60]
         end if
       end sub
             ]]>
@@ -78,11 +84,15 @@
       <Rectangle id="BorderRect" color="0x00000000" width="200" height="300" />
       <Rectangle id="FallbackRect" color="0x24262DFF" width="192" height="292" translation="[4, 4]" />
       <Poster id="poster" />
+      <Rectangle id="LabelScrim" color="0x07090DDE" />
       <Label 
         id="label" 
         color="0xB8B8B8FF" 
-        font="font:SmallSystemFont" 
-        horizAlign="center" 
+        font="font:SmallBoldSystemFont"
+        horizAlign="left"
+        vertAlign="center"
+        numLines="2"
+        wrap="true"
       />
   </children>
 

@@ -8,6 +8,8 @@ sub Init()
   'Get references to child nodes
   m.RowList = m.top.findNode("RowList")
   m.background = m.top.findNode("Background")
+  m.heroTitle = m.top.findNode("HeroTitle")
+  m.heroDescription = m.top.findNode("HeroDescription")
   m.currentBackgroundUri = ""
 
   ' Initialize Fetchers
@@ -159,6 +161,12 @@ sub OnItemFocused()
             focusedContent = row.getChild(itemFocused[1])
             if focusedContent <> invalid then
               m.top.focusedContent = focusedContent
+              m.heroTitle.text = focusedContent.title
+              description = focusedContent.description
+              if description = invalid or description = ""
+                description = "Select to view details and available playback options."
+              end if
+              m.heroDescription.text = description
               newUri = focusedContent.hdBackgroundImageUrl
               ' Only update the background when the art actually changes to avoid flicker
               if m.currentBackgroundUri <> newUri and newUri <> invalid then
