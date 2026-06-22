@@ -40,29 +40,39 @@
     <Label
       id="episodeHint"
       text="Choose an episode"
-      translation="[1515, 192]"
+      translation="[1515, 202]"
       width="300"
       horizAlign="right"
       font="font:SmallSystemFont"
       color="0x7E8795FF" />
+    <Label
+      id="statusLabel"
+      translation="[96, 214]"
+      width="1500"
+      height="34"
+      font="font:SmallBoldSystemFont"
+      color="0xF0B95BFF"
+      visible="false" />
     <RowList
       id="episodeList"
       itemComponentName="EpisodeItem"
       numRows="20"
-      itemSize="[1920, 315]"
-      rowHeights="[315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315,315]"
-      rowItemSize="[[320, 242]]"
-      rowItemSpacing="[[28, 0]]"
+      itemSize="[1920, 300]"
+      rowHeights="[300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300,300]"
+      rowItemSize="[[300, 220]]"
+      rowItemSpacing="[[24, 0]]"
       showRowLabel="true"
       showRowCounter="false"
-      rowLabelOffset="[[96, -18]]"
+      rowLabelOffset="[[96, 42]]"
       focusXOffset="[96]"
       rowFocusAnimationStyle="floatingFocus"
-      translation="[0, 258]"
+      translation="[0, 250]"
       visible="false" />
     <LoadingIndicator
       id="loadingIndicator"
       centered="true"
+      width="1920"
+      height="1080"
       backgroundOpacity="0.15"
       text="Loading seasons..." />
   </children>

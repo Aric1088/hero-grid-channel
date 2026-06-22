@@ -43,10 +43,12 @@
 
       sub onFocusChanged()
         if m.top.focusPercent > 0.5
-          m.border.color = "0x35C2FFFF"
-          m.top.scale = [1.035, 1.035]
+          m.border.color = "0xFFFFFFFF"
+          m.title.color = "0xFFFFFFFF"
+          m.top.scale = [1.025, 1.025]
         else
           m.border.color = "0x00000000"
+          m.title.color = "0xE3E6EBFF"
           m.top.scale = [1.0, 1.0]
         end if
       end sub
@@ -55,7 +57,7 @@
         if m.top.width <= 0 or m.top.height <= 0 then return
         w = m.top.width
         h = m.top.height
-        imageHeight = h - 62
+        imageHeight = h - 58
         m.border.width = w
         m.border.height = h
         m.fallback.translation = [4, 4]
@@ -64,15 +66,15 @@
         m.thumbnail.translation = [4, 4]
         m.thumbnail.width = w - 8
         m.thumbnail.height = imageHeight - 4
-        m.scrim.translation = [4, imageHeight - 45]
+        m.scrim.translation = [4, imageHeight - 43]
         m.scrim.width = w - 8
-        m.scrim.height = 45
-        m.number.translation = [16, imageHeight - 38]
+        m.scrim.height = 43
+        m.number.translation = [14, imageHeight - 36]
         m.number.width = w - 32
         m.number.height = 32
-        m.title.translation = [8, imageHeight + 7]
-        m.title.width = w - 16
-        m.title.height = 54
+        m.title.translation = [10, imageHeight + 6]
+        m.title.width = w - 20
+        m.title.height = 48
       end sub
     ]]>
   </script>

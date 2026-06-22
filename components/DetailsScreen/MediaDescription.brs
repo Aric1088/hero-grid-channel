@@ -4,7 +4,7 @@
 Sub Init()
   print "Description.brs - [Init]"
   m.Title             = m.top.findNode("Title")
-  m.DescriptionLabel  = m.top.findNode("Description")
+  m.DescriptionLabel  = m.top.findNode("DescriptionText")
   
 End Sub
 
@@ -15,7 +15,7 @@ Sub OnContentChanged()
   item = m.top.content
 
   title = item.title.toStr()
-  if title <> invalid then
+  if title <> invalid and m.Title <> invalid then
     m.Title.text = title.toStr()
   end if
 
@@ -24,7 +24,7 @@ Sub OnContentChanged()
     if value.toStr() <> "" then
       m.DescriptionLabel.text = value.toStr()
     else
-      m.DescriptionLabel.text = "No description"
+      m.DescriptionLabel.text = "Description unavailable."
     end if
   end if
 

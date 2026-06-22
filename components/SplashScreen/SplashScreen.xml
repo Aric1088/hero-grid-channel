@@ -18,7 +18,7 @@
     <!-- Logo/Title -->
     <Label
       id="title"
-      text="SpamFilms"
+      text="SPAMFILMS"
       translation="[0, 405]"
       width="1920"
       height="90"
@@ -31,13 +31,13 @@
     <!-- Subtitle -->
     <Label
       id="subtitle"
-      text="Movies and television, one library"
+      text="MOVIES AND TELEVISION, ONE LIBRARY"
       translation="[0, 520]"
       width="1920"
       height="60"
       horizAlign="center"
       vertAlign="center"
-      font="font:MediumSystemFont"
+      font="font:SmallBoldSystemFont"
       color="0xA9AFBAFF"
       opacity="1.0" />
     <Rectangle id="accent" translation="[900, 500]" width="120" height="5"

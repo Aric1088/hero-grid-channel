@@ -93,13 +93,21 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
         m.EpisodeSelectScreen.callFunc("prepareForDisplay")
         m.EpisodeSelectScreen.setFocus(true)
         m.detailsReturnScreen = ""
+      else if m.detailsReturnScreen = "search"
+        restoreSearchResults()
+        m.detailsReturnScreen = ""
       else
         showDashboard()
       end if
       return true
     else if m.EpisodeSelectScreen.visible = true
       m.EpisodeSelectScreen.visible = false
-      showDashboard()
+      if m.episodeReturnScreen = "search"
+        restoreSearchResults()
+        m.episodeReturnScreen = ""
+      else
+        showDashboard()
+      end if
       return true
     else if m.SearchScreen.visible = true
       toggleSearch()
@@ -224,6 +232,7 @@ sub onSearchResultSelected()
     ' mutates it with stream and torrent fields.
     m.SearchScreen.contentSelected = invalid
     m.SearchScreen.visible = false
+    m.selectionOrigin = "search"
     handleItemSelected(item)
   end if
 end sub
@@ -247,6 +256,12 @@ sub showEpisodeSelectScreen(item as object)
   m.SettingsScreen.visible = false
   m.DetailsScreen.visible = false
   m.TopMenu.visible = false
+  if m.selectionOrigin = "search"
+    m.episodeReturnScreen = "search"
+  else
+    m.episodeReturnScreen = "dashboard"
+  end if
+  m.selectionOrigin = ""
   m.EpisodeSelectScreen.item = item
   m.EpisodeSelectScreen.visible = true
   m.EpisodeSelectScreen.setFocus(true)
@@ -264,7 +279,14 @@ sub showDetailsScreen(item as object)
   m.SearchScreen.visible = false
   m.SettingsScreen.visible = false
 
-  if m.EpisodeSelectScreen.visible = false then m.detailsReturnScreen = "dashboard"
+  if m.EpisodeSelectScreen.visible = false
+    if m.selectionOrigin = "search"
+      m.detailsReturnScreen = "search"
+    else
+      m.detailsReturnScreen = "dashboard"
+    end if
+  end if
+  m.selectionOrigin = ""
 
   m.HeroScreen.visible = false
   m.EpisodeSelectScreen.visible = false
@@ -273,6 +295,17 @@ sub showDetailsScreen(item as object)
   m.DetailsScreen.content = item
   m.DetailsScreen.visible = true
   m.DetailsScreen.setFocus(true)
+end sub
+
+sub restoreSearchResults()
+  m.HeroScreen.visible = false
+  m.SettingsScreen.visible = false
+  m.EpisodeSelectScreen.visible = false
+  m.DetailsScreen.visible = false
+  m.TopMenu.visible = false
+  m.SearchScreen.visible = true
+  m.SearchScreen.setFocus(true)
+  m.SearchScreen.callFunc("restoreResultsFocus")
 end sub
 
 sub onVideoPlayerVisibleChange()

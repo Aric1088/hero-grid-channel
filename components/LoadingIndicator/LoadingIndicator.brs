@@ -4,7 +4,7 @@ sub init()
   print "LoadingIndicator.brs - [init]"
   m.image = m.top.findNode("image")
   m.image.observeField("loadStatus", "omImageLoadStatusChange")
-  m.text = m.top.findNode("text")
+  m.text = m.top.findNode("loadingText")
   m.rotationAnimation = m.top.findNode("rotationAnimation")
   m.rotationAnimationInterpolator = m.top.findNode("rotationAnimationInterpolator")
   m.fadeAnimation = m.top.findNode("fadeAnimation")

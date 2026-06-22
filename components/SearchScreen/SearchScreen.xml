@@ -8,6 +8,7 @@
     <!-- Context Aware Search: "movies" or "series" -->
     <function name="setSearchContext" />
     <function name="resetState" />
+    <function name="restoreResultsFocus" />
   </interface>
 
   <script type="text/brightscript" uri="SearchScreen.brs" />
@@ -37,18 +38,25 @@
       id="keyboard"
       translation="[96, 155]" />
 
+    <Rectangle
+      id="searchActionPanel"
+      translation="[1510, 470]"
+      width="310"
+      height="305"
+      color="0x171B22FF" />
+
     <Button
       id="searchButton"
       text="Search"
-      translation="[1570, 500]"
-      minWidth="220"
+      translation="[1540, 510]"
+      minWidth="250"
       showFocusFootprint="true" />
 
     <Label
       id="statusLabel"
       text="Enter at least 2 characters to search."
-      translation="[1500, 620]"
-      width="300"
+      translation="[1540, 630]"
+      width="250"
       wrap="true"
       numLines="4"
       font="font:MediumSystemFont"
@@ -67,12 +75,12 @@
       itemComponentName="customItem"
       translation="[0, 260]"
       focusXOffset="[96]"
-      itemSize="[1920, 380]"
+      itemSize="[1920, 390]"
       numRows="2"
-      rowHeights="[380, 380]"
-      rowItemSize="[[210, 315]]"
-      rowItemSpacing="[[28, 0]]"
-      rowLabelOffset="[[96, 0]]"
+      rowHeights="[390, 390]"
+      rowItemSize="[[190, 285]]"
+      rowItemSpacing="[[24, 0]]"
+      rowLabelOffset="[[96, 42]]"
       showRowLabel="[true, true]"
       showRowCounter="[false, false]"
       rowFocusAnimationStyle="floatingFocus"
@@ -81,7 +89,10 @@
     <!-- Loading Spinner -->
     <LoadingIndicator 
       id="loadingIndicator" 
-      translation="[1390, 480]"
+      width="1920"
+      height="1080"
+      centered="true"
+      backgroundOpacity="0.45"
       text="Searching..."
       fadeInterval="0.5"
     />

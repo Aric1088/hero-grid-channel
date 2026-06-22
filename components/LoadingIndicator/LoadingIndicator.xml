@@ -45,7 +45,7 @@ Sample:
           </Animation>
         </Poster>
         <Label
-          id="text"
+          id="loadingText"
           horizAlign="center"/>
       </Group>
       <Animation
@@ -86,15 +86,15 @@ Sample:
     <!-- Opacity of the background. To remove background, this should be set to 0. -->
     <field id="backgroundOpacity" type="float" alias="background.opacity" value="0.2" onChange="onBackgroundOpacityChange"/>
     <!-- Loading/message text, if used. -->
-    <field id="text" type="string" alias="text.text" onChange="onTextChange"/>
+    <field id="text" type="string" alias="loadingText.text" onChange="onTextChange"/>
     <!-- Color of the text. -->
-    <field id="textColor" type="color" alias="text.color"/>
+    <field id="textColor" type="color" alias="loadingText.color"/>
     <!-- Space, in pixels, between text and spinner. -->
     <field id="spacing" type="float" value="30"/>
     <!-- Left and right text padding. -->
     <field id="textPadding" type="float" onChange="onTextPaddingChange"/>
     <!-- Font of a loading text. -->
-    <field id="font" type="node" alias="text.font"/>
+    <field id="font" type="node" alias="loadingText.font"/>
     <!-- If set, specifies width of the component, otherwise, parent's width is used. -->
     <field id="width" type="float" onChange="updateLayout"/>
     <!-- If set, specifies height of the component, otherwise, parent's height is used. -->

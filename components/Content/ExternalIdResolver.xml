@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ExternalIdResolver" extends="Task">
+  <interface>
+    <field id="tmdbId" type="string" />
+    <field id="mediaType" type="string" />
+    <field id="imdbId" type="string" alwaysNotify="true" />
+    <field id="hasError" type="boolean" value="false" />
+  </interface>
+
+  <script type="text/brightscript" uri="pkg:/source/apiConfig.brs" />
+  <script type="text/brightscript" uri="ExternalIdResolver.brs" />
+</component>

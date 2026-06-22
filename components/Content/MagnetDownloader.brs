@@ -21,9 +21,15 @@ sub downloadMagnet()
   urlTransfer.AddHeader("Accept", "application/json")
   
   ' Build JSON body
-  jsonBody = "{""magnet_uri"":""" + magnetUrl + """"
+  jsonBody = "{""magnet_uri"":" + FormatJson(magnetUrl)
   if m.top.fileIndex >= 0
     jsonBody = jsonBody + ",""file_index"":" + m.top.fileIndex.toStr()
+  end if
+  if m.top.fileName <> invalid and m.top.fileName <> ""
+    jsonBody = jsonBody + ",""file"":" + FormatJson(m.top.fileName)
+  end if
+  if m.top.mediaType <> invalid and m.top.mediaType <> ""
+    jsonBody = jsonBody + ",""media_type"":" + FormatJson(m.top.mediaType)
   end if
   jsonBody = jsonBody + "}"
   
@@ -63,8 +69,8 @@ function waitForStream(streamUrl as string) as boolean
         print "MagnetDownloader: Stream readiness response " + responseCode.toStr()
         if responseCode = 200
           playlist = event.GetString()
-          if playlist <> invalid and Left(playlist, 7) = "#EXTM3U"
-            print "MagnetDownloader: Stream playlist is ready"
+          if playlist <> invalid and Left(playlist, 7) = "#EXTM3U" and mediaPlaylistReady(streamUrl)
+            print "MagnetDownloader: Stream media playlist is ready"
             return true
           end if
         end if
@@ -76,4 +82,25 @@ function waitForStream(streamUrl as string) as boolean
 
   print "MagnetDownloader: Stream playlist did not become ready"
   return false
+end function
+
+function mediaPlaylistReady(masterUrl as string) as boolean
+  marker = InStr(1, masterUrl, "master.m3u8")
+  if marker = 0 then return true
+
+  mediaUrl = Left(masterUrl, marker - 1) + "v0.m3u8"
+  port = CreateObject("roMessagePort")
+  request = CreateObject("roUrlTransfer")
+  request.SetUrl(mediaUrl)
+  request.SetCertificatesFile("common:/certs/ca-bundle.crt")
+  request.InitClientCertificates()
+  request.SetPort(port)
+  if not request.AsyncGetToString() then return false
+
+  event = wait(900, port)
+  if type(event) <> "roUrlEvent" then return false
+  if event.GetResponseCode() <> 200 then return false
+
+  response = event.GetString()
+  return response <> invalid and InStr(1, response, "#EXTINF:") > 0
 end function

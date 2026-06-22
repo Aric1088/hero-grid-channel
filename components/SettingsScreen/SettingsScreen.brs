@@ -64,7 +64,7 @@ end sub
 function onKeyEvent(key as string, press as boolean) as boolean
   if not press then return false
 
-  if key = "down" and m.keyboard.hasFocus()
+  if key = "down" and m.keyboard.isInFocusChain()
     m.saveButton.setFocus(true)
     return true
   else if key = "up" and (m.saveButton.hasFocus() or m.resetButton.hasFocus())

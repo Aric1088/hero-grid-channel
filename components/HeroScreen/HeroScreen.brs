@@ -147,6 +147,7 @@ sub updateDisplay(content as object)
   if content <> invalid
      m.top.content = content
      m.top.numBadRequests = 0
+     m.rowList.jumpToRowItem = [0, 0]
      m.rowList.setFocus(true) 
   end if
 end sub
@@ -163,7 +164,7 @@ sub OnItemFocused()
               m.top.focusedContent = focusedContent
               m.heroTitle.text = focusedContent.title
               description = focusedContent.description
-              if description = invalid or description = ""
+              if description = invalid or description = "" or LCase(description) = "no description available"
                 description = "Select to view details and available playback options."
               end if
               m.heroDescription.text = description

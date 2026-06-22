@@ -8,7 +8,7 @@
       font="font:MediumBoldSystemFont" color="0x35C2FFFF" />
     <Label
       text="Change the server used by this Roku. This is normally only needed for local or recovery setups."
-      translation="[96, 188]" width="1320" height="58" numLines="2" wrap="true"
+      translation="[96, 188]" width="1620" height="68" numLines="2" wrap="true"
       font="font:SmallSystemFont" color="0xA9AFBAFF" />
     <Rectangle translation="[96, 264]" width="1500" height="100" color="0x171B22FF" />
     <Label text="ACTIVE SERVER" translation="[124, 280]" width="250" height="28"

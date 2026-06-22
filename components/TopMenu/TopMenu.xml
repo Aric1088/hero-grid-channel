@@ -36,6 +36,8 @@
       rowItemSpacing="[[8, 0]]"
       showRowLabel="[false]"
       showRowCounter="[false]"
+      focusBitmapUri="pkg:/images/menu-focus.png"
+      focusFootprintBitmapUri="pkg:/images/transparent.png"
       translation="[410, 28]"
     />
     <Rectangle
